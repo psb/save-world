@@ -1,19 +1,38 @@
+var Maps = new Meteor.Collection('maps');
+var Players = new Meteor.Collection('players');
+
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to save-world.";
+  Session.set('answer', 'NY');
+
+  var checkAnswer = function(player, guess){
+    if ( Session.equals('answer', guess) ){
+      Players.update( {_id: player._id}, {$inc: {score: +10}} );
+      // TODO: End game
+    }
   };
 
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
+  Template.players.players = function(){
+    return Players.find( {} );
+  };
+
+  Template.guess.events = {
+    'keypress #guess': function(evt, template){
+      if (evt.which === 13) {
+        var answer = template.find('#guess').value;
+        Players.update( this, {$inc: {guesses: -1}} );
+        checkAnswer(this, answer);
+        template.find('#guess').value = '';
+      }
     }
-  });
+  };
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
+    if (Players.find().count() === 0){
+      Players.insert({ name: 'Lord Pippen', score: 0, location: 'UK', guesses: 10 });
+      Players.insert({ name: 'Davis Love Junior the 3rd', score: 0, location: 'USA', guesses: 10 });
+      Players.insert({ name: 'Mo', score: 0, location: 'Mauritania', guesses: 10 });
+    }
   });
 }
