@@ -1,13 +1,36 @@
 <head>
-  <title>save-world</title>
+  <title>Save The World</title>
 </head>
 
 <body>
-  {{> hello}}
+  {{> map}}
+  {{> players}}
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name='map'>
+
+</template>
+
+<template name='players'>
+  <div class='players'>
+    {{#each players}}
+      {{> player}}
+    {{/each}}
+  </div>
+</template>
+
+<template name='player'>
+  <div class='player-details'>
+    <p class='name'>{{ name }}</p>
+    <p class='score'>{{ score }}</p>
+    <p class='location'>{{ location }}</p>
+    <p class='guesses'>{{ guesses }}</p>
+    {{> guess}}
+  </div>
+</template>
+
+<template name='guess'>
+  <div class='guess-box'>
+    <input type='text' placeholder='Enter your guess here and hit "return"' id='guess'>
+  </div>
 </template>
