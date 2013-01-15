@@ -80,7 +80,7 @@ if (Meteor.isClient){
   l = l.split(' ');
 
   var count = -1;
-  var projection = d3.geo.polyhedron.waterman()
+  var projection = d3.geo.orthographic()
 
         .scale(248)
         .clipAngle(87);
@@ -96,16 +96,16 @@ if (Meteor.isClient){
     var i = -1, n = countries.length;
     var border = "steelblue", world_border = "steelblue";
     var selected = "red", country = "#333";
-
     countries.forEach(function(d) { d.name = names.filter(function(n) { return d.id == n.id; })[0].name; });
     countries.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
-    window.next = function() {
+    window.next = function(i) {
+       if (! i) i = ~~(Math.random() * countries.length);
       d3.transition()
         .duration(500)
         .each("start", function() {
-          Session.set('answer', countries[ i = (i + 1) % n]);
-          Session.set('answer_i', i);
+          Session.set('answer', countries[i].name);
+          console.log(countries[i].name)
         })
         .tween("rotate", function() {
           var p = d3.geo.centroid(countries[i]),
@@ -121,14 +121,12 @@ if (Meteor.isClient){
         })
     }
 
-    d3.select('canvas').on('click', window.next);
     d3.select('canvas').on('contextmenu', function () {
       d3.event.preventDefault();
       var k=  l[(count = count+1)];
       projection = d3.geo[k]().scale(248).clipAngle(87);
       path = d3.geo.path().projection(projection).context(c); 
       window.next();
-      window.history.pushState('lol',null, count + ':' + l[count]);
     });
   }
   run(JSON.parse(data_world), data_names)
