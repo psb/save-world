@@ -1,3 +1,30 @@
 #guess {
   width: 250px;
 }
+
+.map {
+  border: 1px solid black;
+  margin: 0 auto;
+}
+
+.map svg {
+  display: block;
+  margin: auto;
+}
+
+.player-details {
+  float: left;
+}
+
+.player-details.currentPlayer {
+  float: right;
+}
+
+.guess-box {
+  display: none;
+}
+
+.guess-box.currentPlayer {
+  display: inline;
+}
+
