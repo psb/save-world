@@ -11,27 +11,36 @@
     <div class='row'>
       <div class='span12'>
         {{> map}}
-        {{> players}}
         {{> leaderboard}}
+        {{> currentPlayer}}
+        {{> players}}
       </div>
     </div>
   </div>
 </template>
 
 <template name='map'>
+<<<<<<< HEAD
   
+=======
+  <div class='map span8'>
+    <svg width='500' height='500'></svg>
+  </div>
+>>>>>>> paul/development
 </template>
 
 <template name='players'>
-  <div class='players'>
+  <div class='players span8'>
+    <h3>Players</h3>
     {{#each players}}
       {{> player}}
     {{/each}}
   </div>
 </template>
 
-<template name='player'>
-  <div class='player-details {{ currentPlayer }} span3'>
+<template name='currentPlayer'>
+  <div class='currentPlayer span3'>
+    <h3>You</h3>
     <p class='username'>Name: {{ username }}</p>
     <p class='score'>Score: {{ score }}</p>
     <p class='location'>
@@ -43,20 +52,30 @@
   </div>
 </template>
 
+<template name='player'>
+  <div class='player-details span2'>
+    <img class='player-flag' src='/flags_48/{{ location }}.png'>
+    <span class='player-name'>{{ username }}</span>
+    <span class='player-score'>{{ score }}</span>
+  </div>
+</template>
+
 <template name='guess'>
-  <div class='guess-box {{ currentPlayer }}'>
+  <div class='guess-box'>
     <input type='text' placeholder='Enter your guess here and hit "return"' id='guess'>
   </div>
 </template>
 
 <template name='leaderboard'>
-  <div class='high-scores span4'>
-    <h1>Leaderboard</h1>
+  <div class='high-scores'>
+    <h3 class='span3'>Leaderboard</h3>
     {{#each players}}
-      <div class='high-scorer'>
+      <div class='high-scorer span3'>
         <img class='player-flag' src='/flags_48/{{ location }}.png'>
-        <span class='player-name'>{{ username }}</span>
-        <span class='player-score'>: {{ score }}</span>
+        <div class='high-scorer-details'>
+          <span class='player-name'>{{ username }}</span>
+          <span class='player-score'>{{ score }}</span>
+        </div>
       </div>
     {{/each}}
   </div>    
