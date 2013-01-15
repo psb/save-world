@@ -20,13 +20,6 @@
 </template>
 
 <template name='map'>
-<<<<<<< HEAD
-  
-=======
-  <div class='map span8'>
-    <svg width='500' height='500'></svg>
-  </div>
->>>>>>> paul/development
 </template>
 
 <template name='players'>
@@ -40,14 +33,12 @@
 
 <template name='currentPlayer'>
   <div class='currentPlayer span3'>
-    <h3>You</h3>
-    <p class='username'>Name: {{ username }}</p>
+    <span>Name: <p contentEditable class='username'> click to edit name </p></span>
     <p class='score'>Score: {{ score }}</p>
     <p class='location'>
       <img class='player-flag' src='/flags_48/{{ location }}.png'>
       {{ location }}
     </p>
-    <p class='guesses'>Guesses Remaining: {{ guesses }}</p>
     {{> guess}}
   </div>
 </template>
