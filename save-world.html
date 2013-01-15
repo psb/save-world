@@ -24,12 +24,21 @@
 </template>
 
 <template name='players'>
-  <div class='players span3'>
-    <h3>Players</h3>
-    {{#each players}}
-      {{> player}}
-    {{/each}}
-  </div>
+  <h3 class='section-title span3'>Players</h3>
+  <table class='table table-striped span3'>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each players}}
+        {{> player}}
+      {{/each}}
+    </tbody>
+  <table>
 </template>
 
 <template name='currentPlayer'>
@@ -299,11 +308,11 @@
 </template>
 
 <template name='player'>
-  <div class='player-details'>
-    <img class='player-flag' src='/flags_32/{{ location }}.png'>
-    <span class='player-name'>{{ username }}</span>
-    <span class='player-score'>{{ score }}</span>
-  </div>
+  <tr>
+    <td><img class='player-flag' src='/flags_32/{{ location }}.png'></td>
+    <td class='table-text'>{{ username }}</td>
+    <td class='table-text score'>{{ score }}</td>
+  </tr>
 </template>
 
 <template name='guess'>
@@ -313,16 +322,19 @@
 </template>
 
 <template name='leaderboard'>
-  <div class='high-scores span3'>
-    <h3>Leaderboard</h3>
-    {{#each players}}
-      <div class='high-scorer'>
-        <img class='player-flag' src='/flags_32/{{ location }}.png'>
-        <div class='high-scorer-details'>
-          <span class='player-name'>{{ username }}</span>
-          <span class='player-score'>{{ score }}</span>
-        </div>
-      </div>
-    {{/each}}
-  </div>    
+  <h3 class='section-title span3'>Leaderboard</h3>
+  <table class='table table-striped span3'>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each players}}
+        {{> player}}
+      {{/each}}
+    </tbody>
+  </table>    
 </template>
