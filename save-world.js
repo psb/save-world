@@ -3,16 +3,29 @@ var Players = new Meteor.Collection('players');
 
 if (Meteor.isClient) {
   Session.set('answer', 'NY');
+  Session.set('currentPlayer', 'Alf');
+
+  var restart = function(){
+    Players.update( {}, {$set: {guesses: 10}}, {multi: true} );
+  };
 
   var checkAnswer = function(player, guess){
     if ( Session.equals('answer', guess) ){
       Players.update( {_id: player._id}, {$inc: {score: +10}} );
-      // TODO: End game
+      restart();
     }
   };
 
   Template.players.players = function(){
     return Players.find( {} );
+  };
+
+  Template.player.currentPlayer = function () {
+    return Session.equals('currentPlayer', this.username) ? 'currentPlayer' : '';
+  };
+
+  Template.guess.currentPlayer = function () {
+    return Session.equals('currentPlayer', this.username) ? 'currentPlayer' : '';
   };
 
   Template.guess.events = {
@@ -25,14 +38,18 @@ if (Meteor.isClient) {
       }
     }
   };
+
+  Template.leaderboard.players = function(){
+    return Players.find( {}, { sort: {score: -1, username: 1}, limit: 5 } );
+  };
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
     if (Players.find().count() === 0){
-      Players.insert({ name: 'Lord Pippen', score: 0, location: 'UK', guesses: 10 });
-      Players.insert({ name: 'Davis Love Junior the 3rd', score: 0, location: 'USA', guesses: 10 });
-      Players.insert({ name: 'Mo', score: 0, location: 'Mauritania', guesses: 10 });
+      Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom', guesses: 10 });
+      Players.insert({ username: 'Davis Love Junior the 3rd', score: 0, location: 'United-States', guesses: 10 });
+      Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands', guesses: 10 });
     }
   });
 }
