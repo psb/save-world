@@ -33,7 +33,7 @@
 </template>
 
 <template name='player'>
-  <div class='player-details {{ currentPlayer }}'>
+  <div class='player-details {{ currentPlayer }} span3'>
     <p class='username'>Name: {{ username }}</p>
     <p class='score'>Score: {{ score }}</p>
     <p class='location'>
@@ -52,7 +52,7 @@
 </template>
 
 <template name='leaderboard'>
-  <div class='high-scores'>
+  <div class='high-scores span4'>
     <h1>Leaderboard</h1>
     {{#each players}}
       <div class='high-scorer'>

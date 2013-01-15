@@ -12,6 +12,10 @@
   margin: auto;
 }
 
+.player-details {
+  float: left;
+}
+
 .player-details.currentPlayer {
   float: right;
 }
@@ -23,3 +27,4 @@
 .guess-box.currentPlayer {
   display: inline;
 }
+
