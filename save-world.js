@@ -35,23 +35,21 @@ if (Meteor.isClient) {
   });
 
   Template.currentPlayer.score = function(){
-    var user =  Session.get('currentPlayer');
+    var user = Session.get('currentPlayer');
     return Players.findOne(user);
   };
   
   Template.currentPlayer.location = function(){
-    var user =  Session.get('currentPlayer');
-    return Players.findOne(user);
+    return Session.get('location');
   };
   
   Template.currentPlayer.guesses = function(){
-    var user =  Session.get('currentPlayer');
+    var user = Session.get('currentPlayer');
     return Players.findOne(user);
   };
 
-
   Template.currentPlayer.currentPlayer = function(){
-    var player =  Session.get('currentPlayer');
+    var player = Session.get('currentPlayer');
     return Players.findOne(user);
   }
 
@@ -60,7 +58,7 @@ if (Meteor.isClient) {
   };
 
   Template.guess.currentPlayer = function(){
-    var user =  Session.get('currentPlayer');
+    var user = Session.get('currentPlayer');
     return Players.findOne(user);
   }
 
@@ -71,6 +69,14 @@ if (Meteor.isClient) {
       Players.update( this, {$inc: {guesses: -1}} );
       checkAnswer(this, answer);
       template.find('#guess').value = '';
+    }
+  };
+
+  Template.currentPlayer.events = {
+    'blur #player-country': function(evt, template){
+      var location = template.find('#player-country').value;
+      if (Session.get(''))
+      Session.set('location', location);
     }
   };
 

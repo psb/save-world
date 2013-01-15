@@ -27,3 +27,7 @@ h3 {
 td.table-text.score {
   text-align: center;
 }
+
+.player-flag {
+  margin-bottom: 10px;
+}
