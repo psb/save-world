@@ -2,12 +2,9 @@
   width: 250px;
 }
 
-.map {
+.canvas {
   border: 1px solid black;
   margin: 0 auto;
-}
-
-.map svg {
   display: block;
   margin: auto;
 }
