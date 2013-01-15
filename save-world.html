@@ -10,16 +10,21 @@
   <div class='container'>
     <div class='row'>
       <div class='span12'>
-        {{> leaderboard}}
+        {{> map}}
         {{> currentPlayer}}
+        {{> leaderboard}}
         {{> players}}
       </div>
     </div>
   </div>
 </template>
 
+<template name='map'>
+  <div id='map' class='span8'></div>
+</template>
+
 <template name='players'>
-  <div class='players span8'>
+  <div class='players span3'>
     <h3>Players</h3>
     {{#each players}}
       {{> player}}
@@ -33,7 +38,9 @@
     <input type='text' placeholder='Enter Your Name' id='user-name'>
     <p class='score'>Score: {{ score }}</p>
     <input type='text' placeholder='Enter Your Country' id='player-country' list='countries' />
+    {{#if location}}
     <img class='player-flag' src='/flags_32/{{ location }}.png'>
+    {{/if}}
     <datalist id='countries'>
       <option value='Abkhazia'>
       <option value='Afghanistan'>
@@ -292,7 +299,7 @@
 </template>
 
 <template name='player'>
-  <div class='player-details span2'>
+  <div class='player-details'>
     <img class='player-flag' src='/flags_32/{{ location }}.png'>
     <span class='player-name'>{{ username }}</span>
     <span class='player-score'>{{ score }}</span>
@@ -306,10 +313,10 @@
 </template>
 
 <template name='leaderboard'>
-  <div class='high-scores'>
-    <h3 class='span3'>Leaderboard</h3>
+  <div class='high-scores span3'>
+    <h3>Leaderboard</h3>
     {{#each players}}
-      <div class='high-scorer span3'>
+      <div class='high-scorer'>
         <img class='player-flag' src='/flags_32/{{ location }}.png'>
         <div class='high-scorer-details'>
           <span class='player-name'>{{ username }}</span>
