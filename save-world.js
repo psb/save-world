@@ -5,8 +5,7 @@ if (Meteor.isClient) {
   Session.set('answer', 'NY');
 
   var restart = function(){
-    Players.update( {}, {$set: {guesses: 10}}, {multi: true} );
-    Session.get('currentPlayer').guesses = 10;
+    Players.update( {active: true}, {$set: {guesses: 10}}, {multi: true} );
   };
 
   var checkAnswer = function(player, guess){
@@ -17,33 +16,13 @@ if (Meteor.isClient) {
     }
   };
 
-  Template.currentPlayer.username = function(){
-    var user =  Session.get('currentPlayer');
-    return Players.findOne(user);
-  };
-  
-  Template.currentPlayer.score = function(){
-    var user =  Session.get('currentPlayer');
-    return Players.findOne(user);
-  };
-  
-  Template.currentPlayer.location = function(){
-    var user =  Session.get('currentPlayer');
-    return Players.findOne(user);
-  };
-  
-  Template.currentPlayer.guesses = function(){
-    var user =  Session.get('currentPlayer');
-    return Players.findOne(user);
-  };
-
   Template.currentPlayer.currentPlayer = function(){
-    var user =  Session.get('currentPlayer');
+    var player =  Session.get('currentPlayer');
     return Players.findOne(user);
   }
 
   Template.players.players = function(){
-    return Players.find( {}, {sort: {score: -1}} );
+    return Players.find( {active: true}, {sort: {score: -1}} );
   };
 
   Template.guess.currentPlayer = function(){
@@ -71,9 +50,9 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     if (Players.find().count() === 0){
-      Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom', guesses: 10 });
-      Players.insert({ username: 'Davis the 3rd', score: 0, location: 'United-States', guesses: 10 });
-      Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands', guesses: 10 });
+      Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom', guesses: 10, active: true });
+      Players.insert({ username: 'Davis the 3rd', score: 0, location: 'United-States', guesses: 10, active: true });
+      Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands', guesses: 10, active: true });
     }
   });
 }
