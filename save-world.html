@@ -12,6 +12,7 @@
       <div class='span12'>
         {{> map}}
         {{> players}}
+        {{> currentPlayer}}
         {{> leaderboard}}
       </div>
     </div>
@@ -32,8 +33,8 @@
   </div>
 </template>
 
-<template name='player'>
-  <div class='player-details {{ currentPlayer }}'>
+<template name='currentPlayer'>
+  <div class='currentPlayer clearfix'>
     <p class='username'>Name: {{ username }}</p>
     <p class='score'>Score: {{ score }}</p>
     <p class='location'>
@@ -45,8 +46,16 @@
   </div>
 </template>
 
+<template name='player'>
+  <div class='player-details'>
+    <img class='player-flag' src='/flags_48/{{ location }}.png'>
+    <span class='player-name'>{{ username }}</span>
+    <span class='player-score'>: {{ score }}</span>
+  </div>
+</template>
+
 <template name='guess'>
-  <div class='guess-box {{ currentPlayer }}'>
+  <div class='guess-box'>
     <input type='text' placeholder='Enter your guess here and hit "return"' id='guess'>
   </div>
 </template>

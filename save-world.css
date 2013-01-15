@@ -12,14 +12,6 @@
   margin: auto;
 }
 
-.player-details.currentPlayer {
+.currentPlayer {
   float: right;
-}
-
-.guess-box {
-  display: none;
-}
-
-.guess-box.currentPlayer {
-  display: inline;
 }
