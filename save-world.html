@@ -11,25 +11,24 @@
     <div class='row'>
       <div class='span12'>
         {{> map}}
-        {{> players}}
         {{> leaderboard}}
+        {{> players}}
       </div>
     </div>
   </div>
 </template>
 
 <template name='map'>
-  <div class='map'>
+  <div class='map span8'>
     <svg width='500' height='500'></svg>
   </div>
 </template>
 
 <template name='players'>
-  <div class='players'>
-    {{#each players}}
-      {{> player}}
-    {{/each}}
-  </div>
+  <h3 class='players span3'>Players</h3>
+  {{#each players}}
+    {{> player}}
+  {{/each}}
 </template>
 
 <template name='player'>
@@ -52,13 +51,15 @@
 </template>
 
 <template name='leaderboard'>
-  <div class='high-scores span4'>
-    <h1>Leaderboard</h1>
+  <div class='high-scores'>
+    <h3 class='span3'>Leaderboard</h3>
     {{#each players}}
-      <div class='high-scorer'>
+      <div class='high-scorer span3'>
         <img class='player-flag' src='/flags_48/{{ location }}.png'>
-        <span class='player-name'>{{ username }}</span>
-        <span class='player-score'>: {{ score }}</span>
+        <div class='high-scorer-details'>
+          <span class='player-name'>{{ username }}</span>
+          <span class='player-score'>{{ score }}</span>
+        </div>
       </div>
     {{/each}}
   </div>    

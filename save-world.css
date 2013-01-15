@@ -1,3 +1,12 @@
+h3 {
+  margin-top: 0px;
+}
+
+.container {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 #guess {
   width: 250px;
 }
@@ -12,12 +21,20 @@
   margin: auto;
 }
 
+.players {
+  margin-top: 30px;
+}
+
 .player-details {
-  float: left;
+  margin-top: 10px;
+  border-bottom: 1px solid grey;
 }
 
 .player-details.currentPlayer {
-  float: right;
+  position: absolute;
+  margin-left: 0;
+  margin-top: 530px;
+  border: none;
 }
 
 .guess-box {
@@ -25,6 +42,10 @@
 }
 
 .guess-box.currentPlayer {
+  display: inline;
+}
+
+.high-scorer-details {
   display: inline;
 }
 

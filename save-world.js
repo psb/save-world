@@ -48,7 +48,7 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     if (Players.find().count() === 0){
       Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom', guesses: 10 });
-      Players.insert({ username: 'Davis Love Junior the 3rd', score: 0, location: 'United-States', guesses: 10 });
+      Players.insert({ username: 'Davis Love Jr the 3rd', score: 0, location: 'United-States', guesses: 10 });
       Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands', guesses: 10 });
     }
   });
