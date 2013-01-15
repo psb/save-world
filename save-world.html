@@ -11,22 +11,23 @@
     <div class='row'>
       <div class='span12'>
         {{> map}}
-        {{> players}}
-        {{> currentPlayer}}
         {{> leaderboard}}
+        {{> currentPlayer}}
+        {{> players}}
       </div>
     </div>
   </div>
 </template>
 
 <template name='map'>
-  <div class='map'>
+  <div class='map span8'>
     <svg width='500' height='500'></svg>
   </div>
 </template>
 
 <template name='players'>
-  <div class='players'>
+  <div class='players span8'>
+    <h3>Players</h3>
     {{#each players}}
       {{> player}}
     {{/each}}
@@ -34,7 +35,8 @@
 </template>
 
 <template name='currentPlayer'>
-  <div class='currentPlayer clearfix'>
+  <div class='currentPlayer span3'>
+    <h3>You</h3>
     <p class='username'>Name: {{ username }}</p>
     <p class='score'>Score: {{ score }}</p>
     <p class='location'>
@@ -47,10 +49,10 @@
 </template>
 
 <template name='player'>
-  <div class='player-details'>
+  <div class='player-details span2'>
     <img class='player-flag' src='/flags_48/{{ location }}.png'>
     <span class='player-name'>{{ username }}</span>
-    <span class='player-score'>: {{ score }}</span>
+    <span class='player-score'>{{ score }}</span>
   </div>
 </template>
 
@@ -62,12 +64,14 @@
 
 <template name='leaderboard'>
   <div class='high-scores'>
-    <h1>Leaderboard</h1>
+    <h3 class='span3'>Leaderboard</h3>
     {{#each players}}
-      <div class='high-scorer'>
+      <div class='high-scorer span3'>
         <img class='player-flag' src='/flags_48/{{ location }}.png'>
-        <span class='player-name'>{{ username }}</span>
-        <span class='player-score'>: {{ score }}</span>
+        <div class='high-scorer-details'>
+          <span class='player-name'>{{ username }}</span>
+          <span class='player-score'>{{ score }}</span>
+        </div>
       </div>
     {{/each}}
   </div>    
