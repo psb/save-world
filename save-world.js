@@ -11,13 +11,10 @@ if (Meteor.isClient) {
     })
   })
 
-<<<<<<< HEAD
   // Meteor.call('win'); 
-=======
   var restart = function(){
     Players.update( {active: true}, {$set: {guesses: 10}}, {multi: true} );
   };
->>>>>>> paul/development
 
   Meteor.startup(function () {  
     window.next()
@@ -31,7 +28,6 @@ if (Meteor.isClient) {
     }
   };
 
-<<<<<<< HEAD
   Template.currentPlayer.events({
     'blur .username': function (e) {
       Players.update( {_id:this._id}, {name: e.srcElement.innerText} );
@@ -53,8 +49,7 @@ if (Meteor.isClient) {
     return Players.findOne(user);
   };
 
-=======
->>>>>>> paul/development
+
   Template.currentPlayer.currentPlayer = function(){
     var player =  Session.get('currentPlayer');
     return Players.findOne(user);
@@ -108,15 +103,12 @@ if (Meteor.isServer) {
     if (Game.find().count() === 0) Game.insert ({num: 0});
 
     if (Players.find().count() === 0){
-<<<<<<< HEAD
       Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom'});
       Players.insert({ username: 'Davis the 3rd', score: 0, location: 'United-States'});
       Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands'});
-=======
       Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom', guesses: 10, active: true });
       Players.insert({ username: 'Davis the 3rd', score: 0, location: 'United-States', guesses: 10, active: true });
       Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands', guesses: 10, active: true });
->>>>>>> paul/development
     }
   });
 }
