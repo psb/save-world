@@ -3,7 +3,7 @@ h3 {
 }
 
 .container {
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 50px;
 }
 
@@ -11,23 +11,12 @@ h3 {
   width: 250px;
 }
 
-.canvas {
-  border: 1px solid black;
-  margin: 0 auto;
-  display: block;
-  margin: auto;
-}
-
 .players {
-  margin-left: 0px;
+  margin-top: 20px;
 }
 
-.player-details:first-of-type {
-  margin-left: 0px;
-}
-
-.currentPlayer {
-  margin-top: 30px;
+.high-scores {
+  margin-top: 20px;
 }
 
 .high-scorer-details {

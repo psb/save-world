@@ -1,8 +1,8 @@
 if (Meteor.isClient){
   var canvas, c;
-  var w = 650, h = 650;
+  var w = 750, h = 750;
   Meteor.startup(function () {
-    canvas = d3.select("body").insert("canvas", '.container')
+    canvas = d3.select("#map").insert("canvas", '.container')
       .style('background','aliceblue')
       .attr('width', w)
       .attr('height', h)
