@@ -3,12 +3,25 @@
 </head>
 
 <body>
-  {{> map}}
-  {{> players}}
+  {{> container}}
 </body>
 
-<template name='map'>
+<template name='container'>
+  <div class='container'>
+    <div class='row'>
+      <div class='span12'>
+        {{> map}}
+        {{> players}}
+        {{> leaderboard}}
+      </div>
+    </div>
+  </div>
+</template>
 
+<template name='map'>
+  <div class='map'>
+    <svg width='500' height='500'></svg>
+  </div>
 </template>
 
 <template name='players'>
@@ -20,17 +33,33 @@
 </template>
 
 <template name='player'>
-  <div class='player-details'>
-    <p class='name'>{{ name }}</p>
-    <p class='score'>{{ score }}</p>
-    <p class='location'>{{ location }}</p>
-    <p class='guesses'>{{ guesses }}</p>
+  <div class='player-details {{ currentPlayer }}'>
+    <p class='username'>Name: {{ username }}</p>
+    <p class='score'>Score: {{ score }}</p>
+    <p class='location'>
+      <img class='player-flag' src='/flags_48/{{ location }}.png'>
+      {{ location }}
+    </p>
+    <p class='guesses'>Guesses Remaining: {{ guesses }}</p>
     {{> guess}}
   </div>
 </template>
 
 <template name='guess'>
-  <div class='guess-box'>
+  <div class='guess-box {{ currentPlayer }}'>
     <input type='text' placeholder='Enter your guess here and hit "return"' id='guess'>
   </div>
+</template>
+
+<template name='leaderboard'>
+  <div class='high-scores'>
+    <h1>Leaderboard</h1>
+    {{#each players}}
+      <div class='high-scorer'>
+        <img class='player-flag' src='/flags_48/{{ location }}.png'>
+        <span class='player-name'>{{ username }}</span>
+        <span class='player-score'>: {{ score }}</span>
+      </div>
+    {{/each}}
+  </div>    
 </template>
