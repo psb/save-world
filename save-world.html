@@ -32,10 +32,10 @@
     <h3>You</h3>
     <p class='username'>Name: {{ username }}</p>
     <p class='score'>Score: {{ score }}</p>
-    <p class='location'>
-      <img class='player-flag' src='/flags_48/{{ location }}.png'>
-      {{ location }}
-    </p>
+    <input list='countries' />
+    <datalist id='countries'>
+
+    </datalist>
     <p class='guesses'>Guesses Remaining: {{ guesses }}</p>
     {{> guess}}
   </div>
@@ -43,7 +43,7 @@
 
 <template name='player'>
   <div class='player-details span2'>
-    <img class='player-flag' src='/flags_48/{{ location }}.png'>
+    <img class='player-flag' src='/flags_32/{{ location }}.png'>
     <span class='player-name'>{{ username }}</span>
     <span class='player-score'>{{ score }}</span>
   </div>
@@ -60,7 +60,7 @@
     <h3 class='span3'>Leaderboard</h3>
     {{#each players}}
       <div class='high-scorer span3'>
-        <img class='player-flag' src='/flags_48/{{ location }}.png'>
+        <img class='player-flag' src='/flags_32/{{ location }}.png'>
         <div class='high-scorer-details'>
           <span class='player-name'>{{ username }}</span>
           <span class='player-score'>{{ score }}</span>
