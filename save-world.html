@@ -49,7 +49,6 @@
     {{else}}
       <input type='text' placeholder='Enter Your Name' id='curr-user'>
     {{/if}}
-    <p class='score'>Score: {{ score }}</p>
     {{#if location}}
       <img id='curr-player-flag' class='player-flag' src='/flags_32/{{ location }}.png'>
     {{else}}
@@ -307,6 +306,7 @@
       <option value='Zambia'>
       <option value='Zimbabwe'>
     </datalist>
+    <p class='score'>Score: {{ score }}</p>
     {{> guess}}
   </div>
 </template>
