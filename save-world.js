@@ -25,25 +25,48 @@ if (Meteor.isClient) {
   var checkAnswer = function(guess){
     console.log(guess);
     if (guess.toLowerCase() === Session.get('answer').toLowerCase()){
-      console.log("YOU WIN")
-      Players.update( {_id: Session.get('id')}, {$inc: {score: +10}} );
-      Meteor.call('win');
+      console.log("YOU WIN");
+      console.log(Session.get('id'), Session.get('user'), Session.get('location'));
+      Players.update(
+        {_id: Session.get('id')},
+        {$inc: {score: +10}},
+        function(err){
+          if (err) console.log(error);
+          else {
+            console.log('hello');
+            Meteor.call('win');
+          }
+        }
+      );
     }
   };
 
   Template.currentPlayer.events({
-    'blur #curr-user': function (e) {
-      var user = e.target.value;
-      console.log(user);
-      Players.update( {_id:this._id}, {name: e.srcElement.innerText} );
+    'blur #curr-user': function (evt) {
+      var user = evt.target.value;
+      Players.update( {_id:this._id}, {$set: {username: evt.target.value}} );
       Session.set('user', user);
+      Players.update( {_id: Session.get('id')},
+        {$set: {'username': user}},
+        function(err){
+          if (err) console.log(err);
+          else console.log("Saving username");
+        }
+      );
     },
 
     'keydown #curr-user': function(evt){
       if (evt.which !== 13) return;
-      console.log("SUBMIT BRO")
-      Session.set('user', evt.srcElement.value)
-      Players.update({_id: this._id}, {username: evt.srcElement.value})
+      console.log("SUBMIT BRO");
+      var user = evt.target.value;
+      Session.set('user', evt.target.value);
+      Players.update( {_id: Session.get('id')},
+        {$set: {'username': user}},
+        function(err){
+          if (err) console.log(err);
+          else console.log("Saving username");
+        }
+      );
     },
 
     'click #user-name': function(evt){
@@ -52,11 +75,30 @@ if (Meteor.isClient) {
     
     'blur #player-country': function(evt, template){
       var location = evt.target.value;
-      if (location) Session.set('location', location);
+      if (location) {
+        Session.set('location', location);
+        Players.update( {_id: Session.get('id')},
+          {$set: {'location': location}},
+          function(err){
+            if (err) console.log(err);
+            else console.log("Saving location");
+          }
+        );
+      }
     },
     
     'keydown #player-country': function(evt, template){
-      if (evt.which === 13) Session.set('location', evt.target.value);
+      if (evt.which === 13) {
+        var location = evt.target.value;
+        Session.set('location', evt.target.value);
+        Players.update( {_id: Session.get('id')},
+          {$set: {'location': location}},
+          function(err){
+            if (err) console.log(err);
+            else console.log("Saving location");
+          }
+        );
+      }
     },
 
     'click #curr-player-flag': function(evt){
@@ -64,6 +106,10 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.currentPlayer._id = function(){
+    return Session.get('id');
+  };
+  
   Template.currentPlayer.score = function(){
     var id = Session.get('id');
     console.log(id)
@@ -92,8 +138,8 @@ if (Meteor.isClient) {
     return Players.findOne(user);
   }
 
-  Template.guess.location = function(){
-    return Session.get('location');
+  Template.guess._id = function(){
+    return Session.get('id');
   }
 
   Template.guess.events = {
