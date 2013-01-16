@@ -80,6 +80,7 @@ if (Meteor.isClient){
 
   var count = -1;
   var projection = d3.geo.orthographic()
+
         .scale(248)
         .clipAngle(95);
 
@@ -122,7 +123,7 @@ if (Meteor.isClient){
     d3.select('canvas').on('contextmenu', function () {
       d3.event.preventDefault();
       var k=  l[(count = count+1)];
-      projection = d3.geo[k]().scale(248).clipAngle(87);
+      projection = d3.geo[k]().scale(700).translate([350, 350]).clipAngle(87);
       path = d3.geo.path().projection(projection).context(c); 
       window.next();
     });

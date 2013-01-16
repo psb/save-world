@@ -24,28 +24,31 @@
 </template>
 
 <template name='players'>
-  <div class='players span3'>
-    <h3>Players</h3>
-    {{#each players}}
-      {{> player}}
-    {{/each}}
-  </div>
+  <h3 class='section-title span3'>Players</h3>
+  <table class='table table-striped span3'>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each players}}
+        {{> player}}
+      {{/each}}
+    </tbody>
+  <table>
 </template>
 
 <template name='currentPlayer'>
   <div class='currentPlayer span3'>
-    <span>Name: <p contentEditable class='username'> click to edit name </p></span>
-    <p class='score'>Score: {{ score }}</p>
-    <p class='location'>
-      <img class='player-flag' src='/flags_48/{{ location }}.png'>
-      {{ location }}
-    </p>
     <h3>Play!</h3>
     <input type='text' placeholder='Enter Your Name' id='user-name'>
     <p class='score'>Score: {{ score }}</p>
     <input type='text' placeholder='Enter Your Country' id='player-country' list='countries' />
     {{#if location}}
-    <img class='player-flag' src='/flags_32/{{ location }}.png'>
+      <img class='player-flag' src='/flags_32/{{ location }}.png'>
     {{/if}}
     <datalist id='countries'>
       <option value='Abkhazia'>
@@ -305,11 +308,11 @@
 </template>
 
 <template name='player'>
-  <div class='player-details'>
-    <img class='player-flag' src='/flags_32/{{ location }}.png'>
-    <span class='player-name'>{{ username }}</span>
-    <span class='player-score'>{{ score }}</span>
-  </div>
+  <tr>
+    <td><img class='player-flag' src='/flags_32/{{ location }}.png'></td>
+    <td class='table-text'>{{ username }}</td>
+    <td class='table-text score'>{{ score }}</td>
+  </tr>
 </template>
 
 <template name='guess'>
@@ -319,16 +322,19 @@
 </template>
 
 <template name='leaderboard'>
-  <div class='high-scores span3'>
-    <h3>Leaderboard</h3>
-    {{#each players}}
-      <div class='high-scorer'>
-        <img class='player-flag' src='/flags_32/{{ location }}.png'>
-        <div class='high-scorer-details'>
-          <span class='player-name'>{{ username }}</span>
-          <span class='player-score'>{{ score }}</span>
-        </div>
-      </div>
-    {{/each}}
-  </div>    
+  <h3 class='section-title span3'>Leaderboard</h3>
+  <table class='table table-striped span3'>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each players}}
+        {{> player}}
+      {{/each}}
+    </tbody>
+  </table>    
 </template>

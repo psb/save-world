@@ -2,12 +2,6 @@ h3 {
   margin-top: 0px;
 }
 
-canvas {
-    position: absolute;
-    left : -180px;
-    top :10px;
-}
-
 .container {
   margin-top: 20px;
   margin-bottom: 50px;
@@ -17,18 +11,23 @@ canvas {
   width: 250px;
 }
 
-.players {
-  margin-top: 20px;
+.section-title {
+  margin-top: 10px;
 }
 
-.high-scores {
-  margin-top: 20px;
+.table-text {
+  margin-top: 10px;
 }
 
-.high-scorer-details {
-  display: inline;
+.table tbody + tbody, .table th, .table td { 
+  border-top: none; 
+  vertical-align: middle;
 }
 
-.username {
-    display:inline;
+td.table-text.score {
+  text-align: center;
+}
+
+.player-flag {
+  margin-bottom: 10px;
 }
