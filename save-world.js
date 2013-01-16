@@ -22,9 +22,9 @@ if (Meteor.isClient) {
     Players.update( {active: true}, {$set: {guesses: 10}}, {multi: true} );
   };
 
-  var checkAnswer = function(player, guess){
-    console.log(player, guess);
-    if (guess === Session.get('answer').toLowerCase()){
+  var checkAnswer = function(guess){
+    console.log(guess);
+    if (guess.toLowerCase() === Session.get('answer').toLowerCase()){
       console.log("YOU WIN")
       Players.update( {_id: Session.get('id')}, {$inc: {score: +10}} );
       Meteor.call('win');
@@ -67,7 +67,7 @@ if (Meteor.isClient) {
   Template.currentPlayer.score = function(){
     var id = Session.get('id');
     console.log(id)
-    return id ?Players.findOne({_id:id}).score: 0;
+    return id ? Players.findOne({_id:id}).score : 0;
   };
   
   Template.currentPlayer.location = function(){
@@ -92,7 +92,7 @@ if (Meteor.isClient) {
     return Players.findOne(user);
   }
 
-  Template.guess.f = function(){
+  Template.guess.location = function(){
     return Session.get('location');
   }
 
@@ -100,7 +100,7 @@ if (Meteor.isClient) {
     'keypress #guess': function(evt, template){
       if (evt.which !== 13) return;
       var answer = evt.target.value;
-      checkAnswer(this, answer);
+      checkAnswer(answer);
       evt.target.value = '';
     }
   };
