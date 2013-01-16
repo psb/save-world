@@ -11,12 +11,8 @@ h3 {
   width: 250px;
 }
 
-.section-title {
-  margin-top: 10px;
-}
-
-.table-text {
-  margin-top: 10px;
+.currentPlayer {
+  margin-bottom: 20px; 
 }
 
 .table tbody + tbody, .table th, .table td { 

@@ -65,18 +65,17 @@ if (Meteor.isClient) {
   Template.guess.events = {
     'keypress #guess': function(evt, template){
       if (evt.which !== 13) return;
-      var answer = evt.srcElement.value;
+      var answer = evt.target.value;
       Players.update( this, {$inc: {guesses: -1}} );
       checkAnswer(this, answer);
-      template.find('#guess').value = '';
+      evt.target.value = '';
     }
   };
 
   Template.currentPlayer.events = {
     'blur #player-country': function(evt, template){
-      var location = template.find('#player-country').value;
-      if (Session.get(''))
-      Session.set('location', location);
+      var location = evt.target.value;
+      if (location) { Session.set('location', location) };
     }
   };
 
