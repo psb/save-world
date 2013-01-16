@@ -15,6 +15,10 @@ h3 {
   margin-bottom: 20px; 
 }
 
+#curr-player-flag {
+  display: block;
+}
+
 .table tbody + tbody, .table th, .table td { 
   border-top: none; 
   vertical-align: middle;
