@@ -3,7 +3,6 @@ if (Meteor.isClient){
   var w = 750, h = 750;
   Meteor.startup(function () {
     canvas = d3.select("#map").insert("canvas", '.container')
-      .style('background','aliceblue')
       .attr('width', w)
       .attr('height', h)
     c = canvas.node().getContext("2d");
@@ -82,9 +81,8 @@ if (Meteor.isClient){
   var count = -1;
   var projection = d3.geo.orthographic()
 
-        .scale(700)
-        .translate([350, 350])
-        .clipAngle(87);
+        .scale(248)
+        .clipAngle(95);
 
   var path = d3.geo.path()
         .projection(projection)
@@ -114,6 +112,7 @@ if (Meteor.isClient){
           return function(t) {
             projection.rotate(r(t));
             c.clearRect(0, 0, w, h);
+//            c.fillStyle = world_border, c.lineWidth = 2, c.beginPath(), path(globe), c.fill();
             c.fillStyle = country, c.beginPath(), path(land), c.fill();
             c.fillStyle = selected, c.beginPath(), path(countries[i]), c.fill();
             c.strokeStyle = border, c.lineWidth = .5, c.beginPath(), path(borders), c.stroke();
