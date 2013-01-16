@@ -44,11 +44,16 @@
 <template name='currentPlayer'>
   <div class='currentPlayer span3'>
     <h3>Play!</h3>
-    <input type='text' placeholder='Enter Your Name' id='user-name'>
+    {{#if user}}
+      <p id='user-name'>{{ user }}</p>
+    {{else}}
+      <input type='text' placeholder='Enter Your Name' id='curr-user'>
+    {{/if}}
     <p class='score'>Score: {{ score }}</p>
-    <input type='text' placeholder='Enter Your Country' id='player-country' list='countries' />
     {{#if location}}
-      <img class='player-flag' src='/flags_32/{{ location }}.png'>
+      <img id='curr-player-flag' class='player-flag' src='/flags_32/{{ location }}.png'>
+    {{else}}
+      <input type='text' placeholder='Enter Your Country' id='player-country' list='countries' />
     {{/if}}
     <datalist id='countries'>
       <option value='Abkhazia'>

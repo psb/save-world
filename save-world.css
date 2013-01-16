@@ -27,3 +27,7 @@ td.table-text.score {
 .player-flag {
   margin-bottom: 10px;
 }
+
+#user-name {
+  font-size: 1.2em;
+}
