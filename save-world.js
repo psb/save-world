@@ -26,8 +26,8 @@ if (Meteor.isClient) {
     console.log(player, guess);
     if (guess === Session.get('answer').toLowerCase()){
       console.log("YOU WIN")
-      Players.update( {_id: player._id}, {$inc: {score: +10}} );
-      // Meteor.call('win'); doesnt work 
+      Players.update( {_id: Session.get('id')}, {$inc: {score: +10}} );
+      Meteor.call('win');
     }
   };
 
@@ -43,7 +43,7 @@ if (Meteor.isClient) {
     return id ?Players.findOne({_id:id}).score: 0;
   };
   
-  Template.currentPlayer.location = function(){
+  Template.currentPlayer.f = function(){
     return Session.get('location');
   };
   
@@ -60,7 +60,6 @@ if (Meteor.isClient) {
     return Session.get('name');
   }
 
-
   Template.currentPlayer.currentPlayer = function(){
     var player = Session.get('currentPlayer');
     return Players.findOne(user);
@@ -75,19 +74,20 @@ if (Meteor.isClient) {
     return Players.findOne(user);
   }
 
+  Template.guess.f = function(){
+    return Session.get('location');
+  }
+
   Template.guess.events = {
     'keypress #guess': function(evt, template){
       if (evt.which !== 13) return;
       var answer = evt.target.value;
-      Players.update( this, {$inc: {guesses: -1}} );
-      checkAnswer(this, answer);
+      checkAnswer(answer);
       evt.target.value = '';
     }
   };
-
   Template.currentPlayer.events = {
     'keydown #user-name': function(evt){
-      console.log(10)
       if (evt.which !== 13) return;
       console.log("SUBMIT BRO")
       Session.set('name', evt.srcElement.value)
@@ -95,12 +95,9 @@ if (Meteor.isClient) {
     },
     'blur #player-country': function(evt, template){
       Session.set('location', evt.target.value);
-      evt.target.value ='';
     },
     'keydown #player-country': function(evt, template){
-      if (evt.which !== 13) return;
-      Session.set('location', evt.target.value);
-      evt.target.value ='';
+      if (evt.which == 13) Session.set('location', evt.target.value);
     }
   };
 
@@ -116,17 +113,13 @@ if (Meteor.isServer) {
     Game.update({}, {num: i})
     console.log(i)
   }
-
   var id = Meteor.setInterval(start_round, 5000);
-  var out = Meteor.setTimeout(function () {}, 1000);
-  console.log(out)
-  
   Meteor.methods({
     win: function () {
-      console.log('you win !!!' +  id)
       Meteor.clearInterval(id);
-      start_round();
       id = Meteor.setInterval(start_round, 5000);
+      console.log("WOW")
+      start_round();
     }
   });
   Meteor.startup(function () {

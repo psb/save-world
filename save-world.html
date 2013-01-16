@@ -49,10 +49,11 @@
     <input type='text' placeholder='Enter Your Name' id='user-name'>
     {{/if}}
     <p class='score'>Score: {{ score }}</p>
-    <input type='text' placeholder='Enter Your Country' id='player-country' list='countries' />
-    {{#if location}}
-      <img class='player-flag' src='/flags_32/{{ location }}.png'>
-    {{/if}}
+    {{#unless f}}
+    <input type='text' placeholder='Enter Your Country' id='player-country'
+    list='countries' />
+    {{^}}<img class='player-flag' src='/flags_32/{{ location }}.png'>
+    {{/unless}}
     <datalist id='countries'>
       <option value='Abkhazia'>
       <option value='Afghanistan'>
