@@ -43,8 +43,11 @@
 
 <template name='currentPlayer'>
   <div class='currentPlayer span3'>
-    <h3>Play!</h3>
+    {{#if has_name}}
+    <p class='name'>name: {{ username }}</p>
+    {{^}}
     <input type='text' placeholder='Enter Your Name' id='user-name'>
+    {{/if}}
     <p class='score'>Score: {{ score }}</p>
     <input type='text' placeholder='Enter Your Country' id='player-country' list='countries' />
     {{#if location}}
@@ -302,7 +305,6 @@
       <option value='Zambia'>
       <option value='Zimbabwe'>
     </datalist>
-    <p class='guesses'>Guesses Remaining: {{ guesses }}</p>
     {{> guess}}
   </div>
 </template>

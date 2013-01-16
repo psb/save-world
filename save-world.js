@@ -3,34 +3,37 @@ var Maps = new Meteor.Collection('maps');
 var Players = new Meteor.Collection('players');
 
 if (Meteor.isClient) {
+  Meteor.startup(function () {
+    Players.insert({ username: 'you', score: 0, location: ''});
+    var you = Players.findOne({username:'you'});
+    Session.set('id', you._id);
+    window.next()
+  })
+
   Meteor.autosubscribe(function() {
     Game.find().observe({
       changed: function(item){ 
-        console.log(10)
+        window.next();
       }
     })
   })
 
-  // Meteor.call('win'); 
   var restart = function(){
     Players.update( {active: true}, {$set: {guesses: 10}}, {multi: true} );
   };
 
-  Meteor.startup(function () {  
-    window.next()
-    setInterval(window.next, 5000);
-  })
   var checkAnswer = function(player, guess){
     console.log(player, guess);
     if ( Session.equals('answer', guess) ){
+      console.log("YOU WIN")
       Players.update( {_id: player._id}, {$inc: {score: +10}} );
-      window.next();
+      // Meteor.call('win'); doesnt work 
     }
   };
 
   Template.currentPlayer.events({
     'blur .username': function (e) {
-      Players.update( {_id:this._id}, {name: e.srcElement.innerText} );
+      Players.update( {_id:this._id}, {username: e.srcElement.innerText} );
     }
   });
 
@@ -47,6 +50,15 @@ if (Meteor.isClient) {
     var user = Session.get('currentPlayer');
     return Players.findOne(user);
   };
+
+  Template.currentPlayer.has_name = function(){
+    return Session.get('name');
+  }
+
+  Template.currentPlayer.username = function(){
+    return Session.get('name');
+  }
+
 
   Template.currentPlayer.currentPlayer = function(){
     var player = Session.get('currentPlayer');
@@ -73,6 +85,13 @@ if (Meteor.isClient) {
   };
 
   Template.currentPlayer.events = {
+    'keydown #user-name': function(evt){
+      console.log(10)
+      if (evt.which !== 13) return;
+      console.log("SUBMIT BRO")
+      Session.set('name', evt.srcElement.value)
+      Players.update({_id: this._id}, {username: evt.srcElement.value})
+    },
     'blur #player-country': function(evt, template){
       var location = template.find('#player-country').value;
       if (Session.get(''))
@@ -93,8 +112,8 @@ if (Meteor.isServer) {
     console.log(i)
   }
 
-  var uck = Meteor.setInterval(start_round, 5000);
-  console.log(typeof uck)
+  var id = Meteor.setInterval(start_round, 5000);
+  console.log(typeof id)//WHY OBJECT?
 
   Meteor.methods({
     win: function () {
