@@ -2,12 +2,6 @@ h3 {
   margin-top: 0px;
 }
 
-canvas {
-  position: absolute;
-  left : -180px;
-  top :10px;
-}
-
 .container {
   margin-top: 20px;
   margin-bottom: 50px;
