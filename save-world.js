@@ -29,8 +29,24 @@ if (Meteor.isClient) {
   };
 
   Template.currentPlayer.events({
-    'blur .username': function (e) {
+    'blur #curr-user': function (e) {
+      var user = e.target.value;
+      console.log(user);
       Players.update( {_id:this._id}, {name: e.srcElement.innerText} );
+      Session.set('user', user);
+    },
+
+    'click #user-name': function(evt){
+      Session.set('user', '');
+    },
+    
+    'blur #player-country': function(evt, template){
+      var location = evt.target.value;
+      if (location) { Session.set('location', location) };
+    },
+    
+    'click #curr-player-flag': function(evt){
+      Session.set('location', '');
     }
   });
 
@@ -48,9 +64,8 @@ if (Meteor.isClient) {
     return Players.findOne(user);
   };
 
-  Template.currentPlayer.currentPlayer = function(){
-    var player = Session.get('currentPlayer');
-    return Players.findOne(user);
+  Template.currentPlayer.user = function(){
+    return Session.get('user');
   }
 
   Template.players.players = function(){
@@ -68,13 +83,6 @@ if (Meteor.isClient) {
       var answer = evt.target.value;
       checkAnswer(this, answer);
       evt.target.value = '';
-    }
-  };
-
-  Template.currentPlayer.events = {
-    'blur #player-country': function(evt, template){
-      var location = evt.target.value;
-      if (location) { Session.set('location', location) };
     }
   };
 
