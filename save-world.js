@@ -24,7 +24,7 @@ if (Meteor.isClient) {
 
   var checkAnswer = function(player, guess){
     console.log(player, guess);
-    if ( Session.equals('answer', guess) ){
+    if (guess === Session.get('answer').toLowerCase()){
       console.log("YOU WIN")
       Players.update( {_id: player._id}, {$inc: {score: +10}} );
       // Meteor.call('win'); doesnt work 
@@ -38,8 +38,9 @@ if (Meteor.isClient) {
   });
 
   Template.currentPlayer.score = function(){
-    var user = Session.get('currentPlayer');
-    return Players.findOne(user);
+    var id = Session.get('id');
+    console.log(id)
+    return id ?Players.findOne({_id:id}).score: 0;
   };
   
   Template.currentPlayer.location = function(){
@@ -93,10 +94,14 @@ if (Meteor.isClient) {
       Players.update({_id: this._id}, {username: evt.srcElement.value})
     },
     'blur #player-country': function(evt, template){
-      var location = template.find('#player-country').value;
-      if (Session.get(''))
-      Session.set('location', location);
-    }
+      Session.set('location', evt.target.value);
+      evt.target.value ='';
+    },
+    'keydown #player-country': function(evt, template){
+      if (evt.which !== 13) return;
+      Session.set('location', evt.target.value);
+      evt.target.value ='';
+    },
   };
 
   Template.leaderboard.players = function(){
