@@ -118,8 +118,9 @@ if (Meteor.isServer) {
   }
 
   var id = Meteor.setInterval(start_round, 5000);
-  console.log(typeof id)//WHY OBJECT?
-
+  var fuck = Meteor.setTimeout(function () {}, 1000);
+  console.log(fuck)
+  
   Meteor.methods({
     win: function () {
       console.log('you win !!!' +  id)
@@ -129,9 +130,7 @@ if (Meteor.isServer) {
     }
   });
   Meteor.startup(function () {
-
     if (Game.find().count() === 0) Game.insert ({num: 0});
-
     if (Players.find().count() === 0){
       Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom'});
       Players.insert({ username: 'Davis the 3rd', score: 0, location: 'United-States'});
