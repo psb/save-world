@@ -66,7 +66,6 @@ if (Meteor.isClient) {
     'keypress #guess': function(evt, template){
       if (evt.which !== 13) return;
       var answer = evt.target.value;
-      Players.update( this, {$inc: {guesses: -1}} );
       checkAnswer(this, answer);
       evt.target.value = '';
     }
