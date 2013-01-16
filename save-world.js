@@ -78,10 +78,10 @@ if (Meteor.isClient) {
   Template.guess.events = {
     'keypress #guess': function(evt, template){
       if (evt.which !== 13) return;
-      var answer = evt.srcElement.value;
+      var answer = evt.target.value;
       Players.update( this, {$inc: {guesses: -1}} );
       checkAnswer(this, answer);
-      template.find('#guess').value = '';
+      evt.target.value = '';
     }
   };
 
@@ -101,7 +101,7 @@ if (Meteor.isClient) {
       if (evt.which !== 13) return;
       Session.set('location', evt.target.value);
       evt.target.value ='';
-    },
+    }
   };
 
   Template.leaderboard.players = function(){
@@ -118,8 +118,8 @@ if (Meteor.isServer) {
   }
 
   var id = Meteor.setInterval(start_round, 5000);
-  var fuck = Meteor.setTimeout(function () {}, 1000);
-  console.log(fuck)
+  var out = Meteor.setTimeout(function () {}, 1000);
+  console.log(out)
   
   Meteor.methods({
     win: function () {

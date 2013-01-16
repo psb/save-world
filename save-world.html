@@ -24,8 +24,8 @@
 </template>
 
 <template name='players'>
-  <h3 class='section-title span3'>Players</h3>
-  <table class='table table-striped span3'>
+  <h4 class='span3'>Players</h4>
+  <table class='table table-striped table-condensed span3'>
     <thead>
       <tr>
         <th>Country</th>
@@ -311,7 +311,7 @@
 
 <template name='player'>
   <tr>
-    <td><img class='player-flag' src='/flags_32/{{ location }}.png'></td>
+    <td><img class='table-flag' src='/flags_32/{{ location }}.png'></td>
     <td class='table-text'>{{ username }}</td>
     <td class='table-text score'>{{ score }}</td>
   </tr>
@@ -324,8 +324,8 @@
 </template>
 
 <template name='leaderboard'>
-  <h3 class='section-title span3'>Leaderboard</h3>
-  <table class='table table-striped span3'>
+  <h4 class='span3'>Leaderboard</h4>
+  <table class='table table-striped table-condensed span3'>
     <thead>
       <tr>
         <th>Country</th>
