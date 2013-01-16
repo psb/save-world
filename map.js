@@ -92,13 +92,12 @@ if (Meteor.isClient){
     var countries = topojson.object(world, world.objects.countries).geometries;
     var borders = topojson.mesh(world, world.objects.countries, function(a, b) { return a.id !== b.id; })
     var i = -1, n = countries.length;
-    var border = "steelblue", world_border = "steelblue";
-    var selected = "red", country = "#333";
     countries.forEach(function(d) { d.name = names.filter(function(n) { return d.id == n.id; })[0].name; });
     countries.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
     window.next = function(i) {
-       if (! i) i = ~~(Math.random() * countries.length);
+    var border = "white", world_border = "aliceblue";
+    var selected = "red", country = "#6ADE5B";       if (! i) i = ~~(Math.random() * countries.length);
       d3.transition()
         .duration(500)
         .each("start", function() {
@@ -111,11 +110,11 @@ if (Meteor.isClient){
           return function(t) {
             projection.rotate(r(t));
             c.clearRect(0, 0, w, h);
-//            c.fillStyle = world_border, c.lineWidth = 2, c.beginPath(), path(globe), c.fill();
+            c.fillStyle = world_border, c.lineWidth = 2, c.beginPath(), path(globe), c.fill();
             c.fillStyle = country, c.beginPath(), path(land), c.fill();
             c.fillStyle = selected, c.beginPath(), path(countries[i]), c.fill();
             c.strokeStyle = border, c.lineWidth = .5, c.beginPath(), path(borders), c.stroke();
-            c.strokeStyle = world_border, c.lineWidth = 2, c.beginPath(), path(globe), c.stroke();
+            // c.strokeStyle = world_border, c.lineWidth = 2, c.beginPath(), path(globe), c.stroke();
           };
         })
     }
