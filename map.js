@@ -1,8 +1,10 @@
 if (Meteor.isClient){
+  console.log(10)
   var canvas, c;
-  var w = 750, h = 750;
+  var w = 900, h = 900;
   Meteor.startup(function () {
-    canvas = d3.select("#map").insert("canvas", '.container')
+    d3.select('body').append('svg');
+    canvas = d3.select('body').insert("canvas", '*')
       .attr('width', w)
       .attr('height', h)
     c = canvas.node().getContext("2d");
@@ -80,8 +82,8 @@ if (Meteor.isClient){
 
   var count = -1;
   var projection = d3.geo.orthographic()
-        .translate([w * .47, h * .45])
-        .scale(348)
+        .translate([w * .5, h * .5])
+        .scale(448)
         .clipAngle(95);
 
   var path = d3.geo.path()
@@ -97,10 +99,11 @@ if (Meteor.isClient){
     countries.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
     window.next = function(i) {
-    var border = "white", world_border = "aliceblue";
-    var selected = "red", country = "#6ADE5B";       if (! i) i = ~~(Math.random() * countries.length);
+    var border = "white", world_border = "#7777cc";
+    var selected = "red", country = "#6ADE5B";
+      if (! i) i = ~~(Math.random() * countries.length), console.log("WHY")
       d3.transition()
-        .duration(500)
+        .duration(1000)
         .each("start", function() {
           Session.set('answer', countries[i].name);
           console.log(countries[i].name)

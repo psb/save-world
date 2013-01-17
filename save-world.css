@@ -1,10 +1,57 @@
+.score {
+    font-size: 30px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+svg {
+    position: absolute;
+    top: 400px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+}
+
 h3 {
   margin-top: 0px;
 }
 
+canvas {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+}
+
 .container {
   margin-top: 20px;
+  padding-left: 900px;
   margin-bottom: 50px;
+}
+
+ul {
+    list-style: none;
+}
+
+.choices {
+    font-weight: bold;
+}
+
+h4 {
+    padding-left: 5px;
+}
+
+li {
+    font-size: 20px;
+    line-height: 35px;
+}
+
+body {
+    background: #eee
+}
+
+li:hover {
+    cursor: pointer;
+    background: #fff;
 }
 
 #guess {

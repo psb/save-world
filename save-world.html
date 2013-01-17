@@ -10,7 +10,6 @@
   <div class='container'>
     <div class='row'>
       <div class='span12'>
-        {{> map}}
         {{> currentPlayer}}
         {{> leaderboard}}
         {{> players}}
@@ -18,13 +17,30 @@
     </div>
   </div>
 </template>
+<template name="chat">
+  <input type="text" placeholder="you" class="username"/>
+  <input type="text" placeholder="say"  class="message"/>
+  {{#each convo}}
+    <div>
+      {{username}}: {{message}}
+    </div>
+  {{/each}}
+</template>
+
+<template name='choices'>
+  <ul>
+    {{#each clickme}}
+  <li> {{.}} </li>
+  {{/each }}
+  </ul>
+</template>
 
 <template name='map'>
   <div id='map' class='span8'></div>
 </template>
 
 <template name='players'>
-  <h4 class='span3'>Players</h4>
+  <!-- <h4 class='span3'>Players</h4>  -->
   <table class='table table-striped table-condensed span3'>
     <thead>
       <tr>
@@ -43,9 +59,9 @@
 
 <template name='currentPlayer'>
   <div class='currentPlayer span3'>
-    <h3>Play!</h3>
+    <!-- <h3>Play!</h3> -->
     {{#if user}}
-      <p id='user-name'>{{ user }}</p>
+    <p id='user-name'>{{ user }}</p>
     {{else}}
       <input type='text' placeholder='Enter Your Name' id='curr-user'>
     {{/if}}
@@ -307,7 +323,8 @@
       <option value='Zimbabwe'>
     </datalist>
     <p class='score'>Score: {{ score }}</p>
-    {{> guess}}
+    {{> choices}}
+    {{> chat}}
   </div>
 </template>
 
@@ -326,7 +343,7 @@
 </template>
 
 <template name='leaderboard'>
-  <h4 class='span3'>Leaderboard</h4>
+  <!-- <h4 class='span3'>Leaderboard</h4> -->
   <table class='table table-striped table-condensed span3'>
     <thead>
       <tr>

@@ -1,23 +1,41 @@
+var Chitchat = new Meteor.Collection('chitchat');
 var Game = new Meteor.Collection('game');
-var Maps = new Meteor.Collection('maps');
 var Players = new Meteor.Collection('players');
 
 if (Meteor.isClient) {
   Meteor.startup(function () {
+    Session.set('answer','')
     Players.insert({ username: 'you', score: 0, location: ''});
     var you = Players.findOne({username:'you'});
     Session.set('id', you._id);
     window.next()
-  })
+  });
 
   Meteor.autosubscribe(function() {
     Game.find().observe({
       changed: function(item){ 
-        window.next();
+        window.next(Game.findOne().num);
       }
     })
-  })
+  });
 
+  Template.chat.events({
+    'keydown .message': function(e) {
+      if (e.which != 13) {
+        return
+      };
+      var obj = {
+       username: $('.username').val(),
+       message: $('.message').val()
+      }
+      Chitchat.insert(obj);
+      e.srcElement.value = ("");
+    }
+  });
+
+  Template.chat.convo = function () {
+    return Chitchat.find({});
+  }  
   var restart = function(){
     Players.update( {active: true}, {$set: {guesses: 10}}, {multi: true} );
   };
@@ -35,12 +53,45 @@ if (Meteor.isClient) {
           else {
             console.log('hello');
             Meteor.call('win');
+            
+            function rand(n) { return ~~(Math.random() * n) }
+            var color ='0123456789abcdef'.split('');
+            function wow () { return '#' + color[rand(16)]
+                              + color[rand(16)]
+                              + color[rand(16)]
+                            }
+            d3.select('svg').selectAll('circle')
+              .data([1,2,3,4,5])
+            .enter().append('circle')
+              .attr('r', 100)
+              .attr('cy', function (d) { return d * 100})
+              .style('fill', wow)
+              .style('opacity', '.5')
+            .transition().duration(2500)
+            .attr('cx', 5000)
+            .attr('r',50)
+            .remove();
           }
-        }
-      );
+        });
     }
   };
 
+  Template.choices.clickme = function () {
+    var x = Session.get('answer');
+    var y= '12345'.split('')
+      .map(function () { return ~~ (Math.random() * 250) })
+      .map(function (i) { return data_names[i].name.slice(0,23) })
+
+    if (x) y.push(x);
+    return y.sort();
+  };
+
+  Template.choices.events({
+    'click li' : function (e) {
+      console.log(10)
+      checkAnswer(e.target.innerText);
+    }
+  });
   Template.currentPlayer.events({
     'blur #curr-user': function (evt) {
       var user = evt.target.value;
@@ -152,7 +203,7 @@ if (Meteor.isClient) {
   };
 
   Template.leaderboard.players = function(){
-    return Players.find( {}, { sort: {score: -1, username: 1}, limit: 5 } );
+    return Players.find( {}, { sort: {score: -1, username: 1}, limit: 10 } );
   };
 }
 
@@ -160,8 +211,8 @@ if (Meteor.isServer) {
   var start_round = function () {
     var number_of_countries = 177;
     var i = ~~(Math.random()  * number_of_countries);
-    Game.update({}, {num: i})
-    console.log(i)
+    Game.update({}, {num: i});
+    console.log(i);
   }
   var id = Meteor.setInterval(start_round, 5000);
   Meteor.methods({
