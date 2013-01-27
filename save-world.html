@@ -64,13 +64,14 @@
   <svg></svg>
 </template>
 <template name='currentPlayer'>
-  <div class='currentPlayer span3'>
-    <div class='well'>
+  <div class='currentPlayer span4'>
+    <div id='guess-options' class='well'>
       <h4>Guess the country in red</h4>
       {{> choices}}
+      <span class='instructions'>(click one to guess)</span>
     </div>
     {{#if user}}
-    <p id='user-name'>{{ user }}</p>
+      <p id='user-name'>{{ user }}</p>
     {{else}}
       <input type='text' placeholder='Enter Your Name' id='curr-user'>
     {{/if}}
@@ -81,11 +82,10 @@
     {{/if}}
     <datalist id='countries'>
       {{#each datalist}}
-      <option value="{{.}}">
+        <option value="{{.}}">
       {{/each}}
     </datalist>
     <p class='score'>Score: {{ score }}</p>
-
     {{> chat}}
   </div>
 </template>
@@ -93,9 +93,9 @@
 <template name='player'>
   <tr>
     {{#if location}}
-    <td><img class='table-flag' src='/flags_32/{{ location }}.png'></td>
+      <td><img class='table-flag' src='/flags_32/{{ location }}.png'></td>
     {{else}}
-    <td><img class='table-flag' src='/flags_32/Olympics.png'></td>
+      <td><img class='table-flag' src='/flags_32/Olympics.png'></td>
     {{/if}}
     <td class='table-text'>{{ username }}</td>
     <td class='table-text score'>{{ score }}</td>
