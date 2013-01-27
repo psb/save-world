@@ -1,9 +1,11 @@
+//leaderboard
+//player
+//
 if (Meteor.isClient){
   console.log(10)
   var canvas, c;
   var w = 900, h = 900;
   Meteor.startup(function () {
-    d3.select('body').append('svg');
     canvas = d3.select('body').insert("canvas", '*')
       .attr('width', w)
       .attr('height', h)
@@ -99,15 +101,12 @@ if (Meteor.isClient){
     countries.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
     window.next = function(i) {
-    var border = "white", world_border = "#7777cc";
-    var selected = "red", country = "#6ADE5B";
-      if (! i) i = ~~(Math.random() * countries.length), console.log("WHY")
+      var border = "white", world_border = "#7777cc";
+      var selected = "red", country = "#6ADE5B";
+      if (! i) i = ~~(Math.random() * countries.length);
       d3.transition()
         .duration(1000)
-        .each("start", function() {
-          Session.set('answer', countries[i].name);
-          console.log(countries[i].name)
-        })
+        .each("start", function() { Session.set('answer', countries[i].name) })
         .tween("rotate", function() {
           var p = d3.geo.centroid(countries[i]),
               r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
@@ -124,7 +123,7 @@ if (Meteor.isClient){
 
     d3.select('canvas').on('contextmenu', function () {
       d3.event.preventDefault();
-      var k=  l[(count = count+1)];
+      var k= l[(count = count+1)];
       projection = d3.geo[k]().scale(300).translate([350, 350]).clipAngle(87);
       path = d3.geo.path().projection(projection).context(c); 
       window.next();
@@ -132,4 +131,7 @@ if (Meteor.isClient){
   }
   run(JSON.parse(data_world), data_names)
   });
+  var map = {
+    next: 10
+  };
 }

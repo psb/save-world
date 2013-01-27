@@ -48,6 +48,9 @@ li {
 body {
     background: #eee
 }
+li {
+    color: #661166;
+}
 
 li:hover {
     cursor: pointer;

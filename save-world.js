@@ -3,7 +3,13 @@ var Game = new Meteor.Collection('game');
 var Players = new Meteor.Collection('players');
 
 if (Meteor.isClient) {
+
+  Meteor.setInterval(function () {
+    Players.update({_id: Session.get('id')}, {$set: {last_seen: Date.now()}})
+  },1000 * 60)
+
   Meteor.startup(function () {
+    d3.select('body').append('svg')
     Session.set('answer','')
     Players.insert({ username: 'you', score: 0, location: ''});
     var you = Players.findOne({username:'you'});
@@ -25,8 +31,8 @@ if (Meteor.isClient) {
         return
       };
       var obj = {
-       username: $('.username').val(),
-       message: $('.message').val()
+        username: Session.get('user'),
+        message: $('.message').val()
       }
       Chitchat.insert(obj);
       e.srcElement.value = ("");
@@ -41,7 +47,7 @@ if (Meteor.isClient) {
   };
 
   var checkAnswer = function(guess){
-    console.log(guess);
+    console.log(guess, Session.get('answer'))
     if (guess.toLowerCase() === Session.get('answer').toLowerCase()){
       console.log("YOU WIN");
       console.log(Session.get('id'), Session.get('user'), Session.get('location'));
@@ -51,8 +57,7 @@ if (Meteor.isClient) {
         function(err){
           if (err) console.log(error);
           else {
-            console.log('hello');
-            Meteor.call('win');
+            console.log('MAKE CIRCLES');
             
             function rand(n) { return ~~(Math.random() * n) }
             var color ='0123456789abcdef'.split('');
@@ -62,15 +67,16 @@ if (Meteor.isClient) {
                             }
             d3.select('svg').selectAll('circle')
               .data([1,2,3,4,5])
-            .enter().append('circle')
+              .enter().append('circle')
               .attr('r', 100)
               .attr('cy', function (d) { return d * 100})
               .style('fill', wow)
               .style('opacity', '.5')
-            .transition().duration(2500)
-            .attr('cx', 5000)
-            .attr('r',50)
-            .remove();
+              .transition().duration(2500)
+              .attr('cx', 5000)
+              .attr('r',50)
+              .remove();
+            Meteor.call('win');
           }
         });
     }
@@ -79,8 +85,8 @@ if (Meteor.isClient) {
   Template.choices.clickme = function () {
     var x = Session.get('answer');
     var y= '12345'.split('')
-      .map(function () { return ~~ (Math.random() * 250) })
-      .map(function (i) { return data_names[i].name.slice(0,23) })
+          .map(function () { return ~~ (Math.random() * 250) })
+          .map(function (i) { return data_names[i].name.slice(0,15) })
 
     if (x) y.push(x);
     return y.sort();
@@ -88,8 +94,9 @@ if (Meteor.isClient) {
 
   Template.choices.events({
     'click li' : function (e) {
-      console.log(10)
-      checkAnswer(e.target.innerText);
+      console.log('CLICKINC', e.target)
+      checkAnswer(e.target.innerText.slice(2));
+      //RAQUO
     }
   });
   Template.currentPlayer.events({
@@ -98,12 +105,12 @@ if (Meteor.isClient) {
       Players.update( {_id:this._id}, {$set: {username: evt.target.value}} );
       Session.set('user', user);
       Players.update( {_id: Session.get('id')},
-        {$set: {'username': user}},
-        function(err){
-          if (err) console.log(err);
-          else console.log("Saving username");
-        }
-      );
+                      {$set: {'username': user}},
+                      function(err){
+                        if (err) console.log(err);
+                        else console.log("Saving username");
+                      }
+                    );
     },
 
     'keydown #curr-user': function(evt){
@@ -112,12 +119,12 @@ if (Meteor.isClient) {
       var user = evt.target.value;
       Session.set('user', evt.target.value);
       Players.update( {_id: Session.get('id')},
-        {$set: {'username': user}},
-        function(err){
-          if (err) console.log(err);
-          else console.log("Saving username");
-        }
-      );
+                      {$set: {'username': user}},
+                      function(err){
+                        if (err) console.log(err);
+                        else console.log("Saving username");
+                      }
+                    );
     },
 
     'click #user-name': function(evt){
@@ -129,12 +136,12 @@ if (Meteor.isClient) {
       if (location) {
         Session.set('location', location);
         Players.update( {_id: Session.get('id')},
-          {$set: {'location': location}},
-          function(err){
-            if (err) console.log(err);
-            else console.log("Saving location");
-          }
-        );
+                        {$set: {'location': location}},
+                        function(err){
+                          if (err) console.log(err);
+                          else console.log("Saving location");
+                        }
+                      );
       }
     },
     
@@ -143,12 +150,12 @@ if (Meteor.isClient) {
         var location = evt.target.value;
         Session.set('location', evt.target.value);
         Players.update( {_id: Session.get('id')},
-          {$set: {'location': location}},
-          function(err){
-            if (err) console.log(err);
-            else console.log("Saving location");
-          }
-        );
+                        {$set: {'location': location}},
+                        function(err){
+                          if (err) console.log(err);
+                          else console.log("Saving location");
+                        }
+                      );
       }
     },
 
@@ -181,7 +188,7 @@ if (Meteor.isClient) {
   }
 
   Template.players.players = function(){
-    return Players.find( {active: true}, {sort: {score: -1}} );
+    return Players.find({last_seen: {$gt: Date.now() - 1000 * 30}});
   };
 
   Template.guess.currentPlayer = function(){
@@ -225,13 +232,259 @@ if (Meteor.isServer) {
   });
   Meteor.startup(function () {
     if (Game.find().count() === 0) Game.insert ({num: 0});
-    if (Players.find().count() === 0){
-      Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom'});
-      Players.insert({ username: 'Davis the 3rd', score: 0, location: 'United-States'});
-      Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands'});
-      Players.insert({ username: 'Lord Pippen', score: 0, location: 'United-Kingdom', guesses: 10, active: true });
-      Players.insert({ username: 'Davis the 3rd', score: 0, location: 'United-States', guesses: 10, active: true });
-      Players.insert({ username: 'Alf', score: 0, location: 'Cocos-Keeling-Islands', guesses: 10, active: true });
-    }
   });
+}
+
+if (Meteor.isClient)  Template.currentPlayer.datalist = function () {
+  return [
+  'Abkhazia',
+  'Afghanistan',
+  'Aland',
+  'Albania',
+  'Algeria',
+  'American-Samoa',
+  'Andorra',
+  'Angola',
+  'Anguilla',
+  'Antarctica',
+  'Antigua-and-Barbuda',
+  'Argentina',
+  'Armenia',
+  'Aruba',
+  'Australia',
+  'Austria',
+  'Azerbaijan',
+  'Bahamas',
+  'Bahrain',
+  'Bangladesh',
+  'Barbados',
+  'Belarus',
+  'Belgium',
+  'Belize',
+  'Benin',
+  'Bermuda',
+  'Bhutan',
+  'Bolivia',
+  'Bosnia-and-Herzegovina',
+  'Botswana',
+  'Brazil',
+  'British-Antarctic-Territory',
+  'British-Virgin-Islands',
+  'Brunei',
+  'Bulgaria',
+  'Burkina-Faso',
+  'Burundi',
+  'Cambodia',
+  'Cameroon',
+  'Canada',
+  'Cape-Verde',
+  'Cayman-Islands',
+  'Central-African-Republic',
+  'Chad',
+  'Chile',
+  'China',
+  'Christmas-Island',
+  'Cocos-Keeling-Islands',
+  'Colombia',
+  'Commonwealth',
+  'Comoros',
+  'Cook-Islands',
+  'Costa-Rica',
+  'Cote-d-Ivoire',
+  'Croatia',
+  'Cuba',
+  'Cyprus',
+  'Czech-Republic',
+  'Democratic-Republic-of-the-Congo',
+  'Denmark',
+  'Djibouti',
+  'Dominica',
+  'Dominican-Republic',
+  'East-Timor',
+  'Ecuador',
+  'Egypt',
+  'El-Salvador',
+  'England',
+  'Equatorial-Guinea',
+  'Eritrea',
+  'Estonia',
+  'Ethiopia',
+  'European-Union',
+  'Falkland-Islands',
+  'Faroes',
+  'Fiji',
+  'Finland',
+  'France',
+  'Gabon',
+  'Gambia',
+  'Georgia',
+  'Germany',
+  'Ghana',
+  'Gibraltar',
+  'GoSquared',
+  'Greece',
+  'Greenland',
+  'Grenada',
+  'Guam',
+  'Guatemala',
+  'Guernsey',
+  'Guinea-Bissau',
+  'Guinea',
+  'Guyana',
+  'Haiti',
+  'Honduras',
+  'Hong-Kong',
+  'Hungary',
+  'Iceland',
+  'India',
+  'Indonesia',
+  'Iran',
+  'Iraq',
+  'Ireland',
+  'Isle-of-Man',
+  'Israel',
+  'Italy',
+  'Jamaica',
+  'Japan',
+  'Jersey',
+  'Jordan',
+  'Kazakhstan',
+  'Kenya',
+  'Kiribati',
+  'Kosovo',
+  'Kuwait',
+  'Kyrgyzstan',
+  'Laos',
+  'Latvia',
+  'Lebanon',
+  'Lesotho',
+  'Liberia',
+  'Libya',
+  'Liechtenstein',
+  'Lithuania',
+  'Luxembourg',
+  'Macau',
+  'Macedonia',
+  'Madagascar',
+  'Malawi',
+  'Malaysia',
+  'Maldives',
+  'Mali',
+  'Malta',
+  'Mars',
+  'Marshall-Islands',
+  'Mauritania',
+  'Mauritius',
+  'Mayotte',
+  'Mexico',
+  'Micronesia',
+  'Moldova',
+  'Monaco',
+  'Mongolia',
+  'Montenegro',
+  'Montserrat',
+  'Morocco',
+  'Mozambique',
+  'Myanmar',
+  'NATO',
+  'Nagorno-Karabakh',
+  'Namibia',
+  'Nauru',
+  'Nepal',
+  'Netherlands-Antilles',
+  'Netherlands',
+  'New-Caledonia',
+  'New-Zealand',
+  'Nicaragua',
+  'Niger',
+  'Nigeria',
+  'Niue',
+  'Norfolk-Island',
+  'North-Korea',
+  'Northern-Cyprus',
+  'Northern-Mariana-Islands',
+  'Norway',
+  'Olympics',
+  'Oman',
+  'Pakistan',
+  'Palau',
+  'Palestine',
+  'Panama',
+  'Papua-New-Guinea',
+  'Paraguay',
+  'Peru',
+  'Philippines',
+  'Pitcairn-Islands',
+  'Poland',
+  'Portugal',
+  'Puerto-Rico',
+  'Qatar',
+  'Red-Cross',
+  'Republic-of-the-Congo',
+  'Romania',
+  'Russia',
+  'Rwanda',
+  'Saint-Barthelemy',
+  'Saint-Helena',
+  'Saint-Kitts-and-Nevis',
+  'Saint-Lucia',
+  'Saint-Vincent-and-the-Grenadines',
+  'Samoa',
+  'San-Marino',
+  'Sao-Tome-and-Principe',
+  'Saudi-Arabia',
+  'Scotland',
+  'Senegal',
+  'Serbia',
+  'Seychelles',
+  'Sierra-Leone',
+  'Singapore',
+  'Slovakia',
+  'Slovenia',
+  'Solomon-Islands',
+  'Somalia',
+  'Somaliland',
+  'South-Africa',
+  'South-Georgia-and-the-South-Sandwich-Islands',
+  'South-Korea',
+  'South-Ossetia',
+  'South-Sudan',
+  'Spain',
+  'Sri-Lanka',
+  'Sudan',
+  'Suriname',
+  'Swaziland',
+  'Sweden',
+  'Switzerland',
+  'Syria',
+  'Taiwan',
+  'Tajikistan',
+  'Tanzania',
+  'Thailand',
+  'Togo',
+  'Tonga',
+  'Trinidad-and-Tobago',
+  'Tunisia',
+  'Turkey',
+  'Turkmenistan',
+  'Turks-and-Caicos-Islands',
+  'Tuvalu',
+  'US-Virgin-Islands',
+  'Uganda',
+  'Ukraine',
+  'United-Arab-Emirates',
+  'United-Kingdom',
+  'United-Nations',
+  'United-States',
+  'Uruguay',
+  'Uzbekistan',
+  'Vanuatu',
+  'Vatican-City',
+  'Venezuela',
+  'Vietnam',
+  'Wales',
+  'Western-Sahara',
+  'Yemen',
+  'Zambia',
+  'Zimbabwe']
 }
