@@ -4,7 +4,7 @@
 if (Meteor.isClient){
   console.log(10)
   var canvas, c;
-  var w = 900, h = 900;
+  var w = 700, h = 700;
   Meteor.startup(function () {
     canvas = d3.select('body').insert("canvas", '*')
       .attr('width', w)
@@ -85,7 +85,7 @@ if (Meteor.isClient){
   var count = -1;
   var projection = d3.geo.orthographic()
         .translate([w * .5, h * .5])
-        .scale(448)
+        .scale(350)
         .clipAngle(95);
 
   var path = d3.geo.path()

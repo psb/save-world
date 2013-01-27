@@ -19,7 +19,7 @@ if (Meteor.isClient) {
 
   Meteor.autosubscribe(function() {
     Game.find().observe({
-      changed: function(item){ 
+      changed: function(item){
         window.next(Game.findOne().num);
       }
     })
@@ -41,7 +41,7 @@ if (Meteor.isClient) {
 
   Template.chat.convo = function () {
     return Chitchat.find({});
-  }  
+  }
   var restart = function(){
     Players.update( {active: true}, {$set: {guesses: 10}}, {multi: true} );
   };
@@ -58,7 +58,7 @@ if (Meteor.isClient) {
           if (err) console.log(error);
           else {
             console.log('MAKE CIRCLES');
-            
+
             function rand(n) { return ~~(Math.random() * n) }
             var color ='0123456789abcdef'.split('');
             function wow () { return '#' + color[rand(16)]
@@ -130,7 +130,7 @@ if (Meteor.isClient) {
     'click #user-name': function(evt){
       Session.set('user', '');
     },
-    
+
     'blur #player-country': function(evt, template){
       var location = evt.target.value;
       if (location) {
@@ -144,7 +144,7 @@ if (Meteor.isClient) {
                       );
       }
     },
-    
+
     'keydown #player-country': function(evt, template){
       if (evt.which === 13) {
         var location = evt.target.value;
@@ -167,17 +167,17 @@ if (Meteor.isClient) {
   Template.currentPlayer._id = function(){
     return Session.get('id');
   };
-  
+
   Template.currentPlayer.score = function(){
     var id = Session.get('id');
     console.log(id)
     return id ? Players.findOne({_id:id}).score : 0;
   };
-  
+
   Template.currentPlayer.location = function(){
     return Session.get('location');
   };
-  
+
   Template.currentPlayer.guesses = function(){
     var user = Session.get('currentPlayer');
     return Players.findOne(user);

@@ -1,60 +1,57 @@
 .score {
-    font-size: 30px;
-    margin-bottom: 20px;
-    margin-top: 10px;
+  font-size: 30px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+body {
+  background: #eee
 }
 
 svg {
-    position: absolute;
-    top: 400px;
-    left: 0px;
-    height: 100%;
-    width: 100%;
+  position: absolute;
 }
 
-h3 {
+h3, h4 {
   margin-top: 0px;
 }
 
 canvas {
-    position: absolute;
-    left: 10px;
-    right: 10px;
+  position: absolute;
+  left: 10px;
+  right: 10px;
 }
 
 .container {
   margin-top: 20px;
-  padding-left: 900px;
+  padding-left: 720px;
   margin-bottom: 50px;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
+  margin-left: 0;
 }
 
 .choices {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-h4 {
-    padding-left: 5px;
+caption {
+  font-weight: bold;
+  border-top: 2px solid black;
+  padding: 10px 0;
 }
 
 li {
-    font-size: 20px;
-    line-height: 35px;
-}
-
-body {
-    background: #eee
-}
-li {
-    color: #661166;
+  font-size: 20px;
+  line-height: 35px;
+  color: #661166;
 }
 
 li:hover {
-    cursor: pointer;
-    background: #fff;
+  cursor: pointer;
+  background: #fff;
 }
 
 #guess {
@@ -62,15 +59,15 @@ li:hover {
 }
 
 .currentPlayer {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 #curr-player-flag {
   display: block;
 }
 
-.table tbody + tbody, .table th, .table td { 
-  border-top: none; 
+.table tbody + tbody, .table th, .table td {
+  border-top: none;
   vertical-align: middle;
 }
 
