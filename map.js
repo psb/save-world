@@ -2,13 +2,12 @@
 //player
 //
 if (Meteor.isClient){
-  console.log(10)
   var canvas, c;
   var w = 700, h = 700;
   Meteor.startup(function () {
     canvas = d3.select('body').insert("canvas", '*')
       .attr('width', w)
-      .attr('height', h)
+      .attr('height', h);
     c = canvas.node().getContext("2d");
   var l = "albers "
         + "azimuthalEqualArea "
@@ -101,6 +100,8 @@ if (Meteor.isClient){
     countries.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
     window.next = function(i) {
+      $('.incorrect-feedback').text('');
+
       var border = "white", world_border = "#7777cc";
       var selected = "red", country = "#6ADE5B";
       if (! i) i = ~~(Math.random() * countries.length);

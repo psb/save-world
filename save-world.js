@@ -54,17 +54,29 @@ if (Meteor.isClient) {
         function(err){
           if (err) console.log(error);
           else {
-            Meteor.call('win');
+            $('.score-number').css('color', '#29B329');
+            $('.score-number').animate({ fontSize: '60px' }, 300, function(){
+              $('.score-number').animate({ fontSize: '30px' }, 300, function(){
+                $('.score-number').css('color', '#000000');
+                Meteor.call('win');
+              });
+            });
           }
-        });
+        }
+      );
+    } else {
+      $('.incorrect-feedback').text('Incorrect. Try Again.');
+      setTimeout(function() {
+        $('.incorrect-feedback').text('');
+      }, 500);
     }
   };
 
   Template.choices.clickme = function () {
     var x = Session.get('answer');
-    var y= '12345'.split('')
+    var y = '12345'.split('')
           .map(function () { return ~~ (Math.random() * 250) })
-          .map(function (i) { return data_names[i].name.slice(0,15) })
+          .map(function (i) { return data_names[i].name.slice(0,15) });
 
     if (x) y.push(x);
     return y.sort();

@@ -86,3 +86,10 @@ td.table-text.score {
 .instructions {
   font-size: 0.8em;
 }
+
+.incorrect-feedback {
+  font-size: 1em;
+  font-weight: bold;
+  color: red;
+  padding-left: 10px;
+}
