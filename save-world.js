@@ -5,16 +5,16 @@ var Players = new Meteor.Collection('players');
 if (Meteor.isClient) {
 
   Meteor.setInterval(function () {
-    Players.update({_id: Session.get('id')}, {$set: {last_seen: Date.now()}})
-  },1000 * 60)
+    Players.update({_id: Session.get('id')}, {$set: {last_seen: Date.now()}});
+  },1000 * 60);
 
   Meteor.startup(function () {
-    d3.select('body').append('svg')
-    Session.set('answer','')
+    d3.select('body').append('svg');
+    Session.set('answer','');
     Players.insert({ username: 'you', score: 0, location: ''});
     var you = Players.findOne({username:'you'});
     Session.set('id', you._id);
-    window.next()
+    window.next();
   });
 
   Meteor.autosubscribe(function() {
@@ -22,7 +22,7 @@ if (Meteor.isClient) {
       changed: function(item){
         window.next(Game.findOne().num);
       }
-    })
+    });
   });
 
   Template.chat.events({
@@ -41,52 +41,42 @@ if (Meteor.isClient) {
 
   Template.chat.convo = function () {
     return Chitchat.find({});
-  }
+  };
   var restart = function(){
     Players.update( {active: true}, {$set: {guesses: 10}}, {multi: true} );
   };
 
   var checkAnswer = function(guess){
-    console.log(guess, Session.get('answer'))
     if (guess.toLowerCase() === Session.get('answer').toLowerCase()){
-      console.log("YOU WIN");
-      console.log(Session.get('id'), Session.get('user'), Session.get('location'));
       Players.update(
         {_id: Session.get('id')},
         {$inc: {score: +10}},
         function(err){
           if (err) console.log(error);
           else {
-            console.log('MAKE CIRCLES');
-
-            function rand(n) { return ~~(Math.random() * n) }
-            var color ='0123456789abcdef'.split('');
-            function wow () { return '#' + color[rand(16)]
-                              + color[rand(16)]
-                              + color[rand(16)]
-                            }
-            d3.select('svg').selectAll('circle')
-              .data([1,2,3,4,5])
-              .enter().append('circle')
-              .attr('r', 100)
-              .attr('cy', function (d) { return d * 100})
-              .style('fill', wow)
-              .style('opacity', '.5')
-              .transition().duration(2500)
-              .attr('cx', 5000)
-              .attr('r',50)
-              .remove();
-            Meteor.call('win');
+            $('.score-number').css('color', '#29B329');
+            $('.score-number').animate({ fontSize: '60px' }, 300, function(){
+              $('.score-number').animate({ fontSize: '30px' }, 300, function(){
+                $('.score-number').css('color', '#000000');
+                Meteor.call('win');
+              });
+            });
           }
-        });
+        }
+      );
+    } else {
+      $('.incorrect-feedback').text('Incorrect. Try Again.');
+      setTimeout(function() {
+        $('.incorrect-feedback').text('');
+      }, 500);
     }
   };
 
   Template.choices.clickme = function () {
     var x = Session.get('answer');
-    var y= '12345'.split('')
+    var y = '12345'.split('')
           .map(function () { return ~~ (Math.random() * 250) })
-          .map(function (i) { return data_names[i].name.slice(0,15) })
+          .map(function (i) { return data_names[i].name.slice(0,15) });
 
     if (x) y.push(x);
     return y.sort();
@@ -94,9 +84,7 @@ if (Meteor.isClient) {
 
   Template.choices.events({
     'click li' : function (e) {
-      console.log('CLICKINC', e.target)
       checkAnswer(e.target.innerText.slice(2));
-      //RAQUO
     }
   });
   Template.currentPlayer.events({
@@ -115,7 +103,6 @@ if (Meteor.isClient) {
 
     'keydown #curr-user': function(evt){
       if (evt.which !== 13) return;
-      console.log("SUBMIT BRO");
       var user = evt.target.value;
       Session.set('user', evt.target.value);
       Players.update( {_id: Session.get('id')},
@@ -170,7 +157,6 @@ if (Meteor.isClient) {
 
   Template.currentPlayer.score = function(){
     var id = Session.get('id');
-    console.log(id)
     return id ? Players.findOne({_id:id}).score : 0;
   };
 
@@ -185,7 +171,7 @@ if (Meteor.isClient) {
 
   Template.currentPlayer.user = function(){
     return Session.get('user');
-  }
+  };
 
   Template.players.players = function(){
     return Players.find({last_seen: {$gt: Date.now() - 1000 * 30}});
@@ -194,11 +180,11 @@ if (Meteor.isClient) {
   Template.guess.currentPlayer = function(){
     var user = Session.get('currentPlayer');
     return Players.findOne(user);
-  }
+  };
 
   Template.guess._id = function(){
     return Session.get('id');
-  }
+  };
 
   Template.guess.events = {
     'keypress #guess': function(evt, template){
@@ -219,19 +205,17 @@ if (Meteor.isServer) {
     var number_of_countries = 177;
     var i = ~~(Math.random()  * number_of_countries);
     Game.update({}, {num: i});
-    console.log(i);
-  }
+  };
   var id = Meteor.setInterval(start_round, 5000);
   Meteor.methods({
     win: function () {
       Meteor.clearInterval(id);
       id = Meteor.setInterval(start_round, 5000);
-      console.log("WOW")
       start_round();
     }
   });
   Meteor.startup(function () {
-    if (Game.find().count() === 0) Game.insert ({num: 0});
+    if (Game.find().count() === 0) Game.insert({num: 0});
   });
 }
 
@@ -487,4 +471,4 @@ if (Meteor.isClient)  Template.currentPlayer.datalist = function () {
   'Yemen',
   'Zambia',
   'Zimbabwe']
-}
+};
