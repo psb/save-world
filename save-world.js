@@ -24,7 +24,7 @@ if (Meteor.isClient) {
   Meteor.autosubscribe(function() {
     Game.find().observe({
       changed: function(item){
-        $('.explosion').fadeOut('fast');
+        $('.explosion').stop().hide();
         window.next(Game.findOne().num);
         $('.meteor-image').stop().offset({ top: -790, left: 0 });
         $('.meteor-image').animate({ top: '+=370', left: '+=70' }, 4900, function(){
