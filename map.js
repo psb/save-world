@@ -120,14 +120,20 @@ if (Meteor.isClient){
             c.fillStyle = selected, c.beginPath(), path(countries[i]), c.fill();
             c.strokeStyle = border, c.lineWidth = .5, c.beginPath(), path(borders), c.stroke();
           };
-        })
+        });
+
+      $('.explosion').hide();
+      $('.meteor-image').stop().offset({ top: -790, left: 0 });
+      $('.meteor-image').animate({ top: '+=370', left: '+=70' }, 4900, function(){
+        $('.explosion').show();
+      });
     }
 
     d3.select('canvas').on('contextmenu', function () {
       d3.event.preventDefault();
       var k= l[(count = count+1)];
       projection = d3.geo[k]().scale(300).translate([350, 350]).clipAngle(87);
-      path = d3.geo.path().projection(projection).context(c); 
+      path = d3.geo.path().projection(projection).context(c);
       window.next();
     });
   }

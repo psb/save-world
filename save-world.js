@@ -9,15 +9,11 @@ if (Meteor.isClient) {
   },1000 * 60);
 
   Meteor.startup(function () {
-    $('.explosion').hide();
     d3.select('body').append('svg');
     Session.set('answer','');
     Players.insert({ username: 'you', score: 0, location: ''});
     var you = Players.findOne({username:'you'});
     Session.set('id', you._id);
-    $('.meteor-image').animate({ top: '+=390', left: '+=70' }, 4850, function(){
-      $('.explosion').show();
-    });
     window.next();
   });
 
@@ -25,11 +21,6 @@ if (Meteor.isClient) {
     Game.find().observe({
       changed: function(item){
         window.next(Game.findOne().num);
-        $('.explosion').stop().hide();
-        $('.meteor-image').stop().offset({ top: -790, left: 0 });
-        $('.meteor-image').animate({ top: '+=370', left: '+=70' }, 4850, function(){
-          $('.explosion').show();
-        });
       }
     });
   });
