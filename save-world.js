@@ -63,6 +63,7 @@ if (Meteor.isClient) {
         function(err){
           if (err) console.log(error);
           else {
+            $('.meteor-image').stop().offset({ top: -790, left: 0 });
             $('.score-number').css('color', '#29B329');
             $('.score-number').animate({ fontSize: '60px' }, 300, function(){
               $('.score-number').animate({ fontSize: '30px' }, 300, function(){
