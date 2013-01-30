@@ -15,7 +15,7 @@ if (Meteor.isClient) {
     Players.insert({ username: 'you', score: 0, location: ''});
     var you = Players.findOne({username:'you'});
     Session.set('id', you._id);
-    $('.meteor-image').animate({ top: '+=390', left: '+=70' }, 4900, function(){
+    $('.meteor-image').animate({ top: '+=390', left: '+=70' }, 4850, function(){
       $('.explosion').fadeIn(100);
     });
     window.next();
@@ -27,8 +27,8 @@ if (Meteor.isClient) {
         $('.explosion').stop().hide();
         window.next(Game.findOne().num);
         $('.meteor-image').stop().offset({ top: -790, left: 0 });
-        $('.meteor-image').animate({ top: '+=370', left: '+=70' }, 4900, function(){
-          $('.explosion').show();
+        $('.meteor-image').animate({ top: '+=370', left: '+=70' }, 4850, function(){
+          $('.explosion').fadeIn(100);
         });
       }
     });
