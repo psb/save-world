@@ -26,8 +26,8 @@ if (Meteor.isClient) {
       changed: function(item){
         $('.explosion').fadeOut('fast');
         window.next(Game.findOne().num);
-        $('.meteor-image').stop().offset({ top: -790, left: 10 });
-        $('.meteor-image').animate({ top: '+=390', left: '+=70' }, 4900, function(){
+        $('.meteor-image').stop().offset({ top: -790, left: 0 });
+        $('.meteor-image').animate({ top: '+=370', left: '+=70' }, 4900, function(){
           $('.explosion').fadeIn('fast');
         });
       }

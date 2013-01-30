@@ -11,8 +11,12 @@
   <img class="explosion" src="explosion.png">
   <div class='container'>
     <div class='row'>
-      <div class='span8'>
+      <div class='span4'>
         {{> currentPlayer}}
+      </div>
+    </div>
+    <div class='row player-leaderboard'>
+      <div class='span8'>
         {{> players}}
         {{> leaderboard}}
       </div>
@@ -44,7 +48,7 @@
 </template>
 
 <template name='players'>
-  <table class='table table-striped table-condensed span3'>
+  <table class='table table-striped table-condensed span4'>
   <caption>Currently Playing</caption>
     <thead>
       <tr>
@@ -112,7 +116,7 @@
 </template>
 
 <template name='leaderboard'>
-  <table class='table table-striped table-condensed span3'>
+  <table class='table table-striped table-condensed span4'>
   <caption>Leaderboard</caption>
     <thead>
       <tr>

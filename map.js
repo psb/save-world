@@ -3,7 +3,8 @@
 //
 if (Meteor.isClient){
   var canvas, c;
-  var w = 700, h = 700;
+  var windowWidth = $(window).width();
+  var w = 650, h = w;
   Meteor.startup(function () {
     canvas = d3.select('body').insert("canvas", '*')
       .attr('width', w)

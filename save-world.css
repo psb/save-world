@@ -24,7 +24,7 @@ canvas {
 
 .container {
   margin-top: 20px;
-  padding-left: 720px;
+  padding-left: 670px;
   margin-bottom: 50px;
 }
 
@@ -97,7 +97,7 @@ td.table-text.score {
 .meteor-image {
   position: absolute;
   top: -790px;
-  left: 10px;
+  /*left: 10px;*/
 }
 
 .meteor-strike {
@@ -107,6 +107,16 @@ td.table-text.score {
 
 .explosion {
   position: absolute;
-  top: 100px;
+  top: 50px;
   left: 190px;
+}
+
+.player-leaderboard {
+  position: absolute;
+  left: 0;
+  top: 700px;
+}
+
+.table.span4 {
+  width: 280px;
 }
