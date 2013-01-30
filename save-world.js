@@ -14,13 +14,20 @@ if (Meteor.isClient) {
     Players.insert({ username: 'you', score: 0, location: ''});
     var you = Players.findOne({username:'you'});
     Session.set('id', you._id);
+    $('.meteor-image').animate({ top: '+=370', left: '+=80' }, 4500);
+    $('.explosion').toggle();
     window.next();
   });
 
   Meteor.autosubscribe(function() {
     Game.find().observe({
       changed: function(item){
+        $('.explosion').fadeOut('fast');
         window.next(Game.findOne().num);
+        $('.meteor-image').stop().offset({ top: -790, left: 10 });
+        $('.meteor-image').animate({ top: '+=390', left: '+=70' }, 4500, function(){
+          $('.explosion').fadeIn('fast');
+        });
       }
     });
   });
@@ -68,7 +75,7 @@ if (Meteor.isClient) {
       $('.incorrect-feedback').text('Incorrect. Try Again.');
       setTimeout(function() {
         $('.incorrect-feedback').text('');
-      }, 500);
+      }, 600);
     }
   };
 

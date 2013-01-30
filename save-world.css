@@ -93,3 +93,20 @@ td.table-text.score {
   color: red;
   padding-left: 10px;
 }
+
+.meteor-image {
+  position: absolute;
+  top: -790px;
+  left: 10px;
+}
+
+.meteor-strike {
+  color: red;
+  font-style: italic;
+}
+
+.explosion {
+  position: absolute;
+  top: 100px;
+  left: 190px;
+}

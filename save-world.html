@@ -7,6 +7,8 @@
 </body>
 
 <template name='container'>
+  <img class="meteor-image" src="meteor.png">
+  <img class="explosion" src="explosion.png">
   <div class='container'>
     <div class='row'>
       <div class='span8'>
@@ -66,7 +68,7 @@
 <template name='currentPlayer'>
   <div class='currentPlayer span4'>
     <div id='guess-options' class='well'>
-      <h4>Guess the country in red</h4>
+      <h4>Guess the country in red <span class="meteor-strike">before the Meteor strikes!</span></h4>
       {{> choices}}
       <span class='instructions'>(click a country above to guess)</span>
       <span class='incorrect-feedback'></span>
