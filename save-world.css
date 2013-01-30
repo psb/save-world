@@ -91,13 +91,11 @@ td.table-text.score {
   font-size: 1em;
   font-weight: bold;
   color: red;
-  /*padding-left: 10px;*/
 }
 
 .meteor-image {
   position: absolute;
   top: -790px;
-  /*left: 10px;*/
 }
 
 .meteor-strike {
@@ -111,12 +109,22 @@ td.table-text.score {
   left: 190px;
 }
 
-.player-leaderboard {
+.table.span4 {
+  width: 280px;
+}
+
+.row.player-leaderboard.span7 {
+  width: 700px;
   position: absolute;
   left: 0;
   top: 700px;
 }
 
-.table.span4 {
-  width: 280px;
+@media (min-width: 1435px) {
+
+  .row.player-leaderboard.span7 {
+    position: static;
+    display: inline;
+    width: 300px;
+  }
 }
