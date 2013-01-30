@@ -91,7 +91,7 @@ td.table-text.score {
   font-size: 1em;
   font-weight: bold;
   color: red;
-  padding-left: 10px;
+  /*padding-left: 10px;*/
 }
 
 .meteor-image {

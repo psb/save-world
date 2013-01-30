@@ -83,8 +83,8 @@ if (Meteor.isClient){
 
   var count = -1;
   var projection = d3.geo.orthographic()
-        .translate([w * .5, h * .5])
-        .scale(350)
+        .translate([w * 0.5, h * 0.5])
+        .scale(w * 0.5)
         .clipAngle(95);
 
   var path = d3.geo.path()
