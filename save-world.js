@@ -28,7 +28,7 @@ if (Meteor.isClient) {
         window.next(Game.findOne().num);
         $('.meteor-image').stop().offset({ top: -790, left: 0 });
         $('.meteor-image').animate({ top: '+=370', left: '+=70' }, 4900, function(){
-          $('.explosion').fadeIn(100);
+          $('.explosion').show();
         });
       }
     });
