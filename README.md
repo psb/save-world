@@ -1,4 +1,4 @@
-Meteor Game using D3.
+Game made using [Meteor](http://meteor.com/) and [D3](http://d3js.org/).
 
 Made by [Adnan Wahab](https://github.com/adnan-wahab) and [Paul Bacchus](https://github.com/psb).
 
